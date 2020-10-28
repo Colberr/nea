@@ -1,0 +1,26 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+/* Areas */
+#side {
+	height: 100%;
+	/* width: 20%; */
+	width: 30%;
+}
+
+/* Module Styles */
+.module {
+	border: 1px solid;
+	margin: 5px 3px;
+}
+.module h2 {
+	margin: 5px;
+}
+
+.sml-input {
+	width: 40px;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>NEA Vectors</title>
+		<link rel="stylesheet" href="css/styles.css">
+		<!-- <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> -->
+		<script src="js/script.js"></script>
+		<script src="js/funcs.js"></script>
+  	</head>
+  	<body>
+		<div id="side">
+			<!-- Create Functions -->
+			<div id="side-top">
+				<button onclick="createNewModule(0)">Create Line</button>
+				<button onclick="createNewModule(1)">Create Plane</button>
+			</div>
+			<hr>
+			<!-- Lines & Planes List -->
+			<div id="side-middle">
+				<div class="module">
+					<div class="plane-setup">
+						<h2>Select Format:</h2>
+						<input type="radio" name="plane-type" value="planeABC" id="planeABC">
+						<label for="planeABC">ABC</label><br>
+						<input type="radio" name="plane-type" value="planeAN" id="planeAN">
+						<label for="planeAN">AN</label><br>
+						<input type="radio" name="plane-type" value="planeND" id="planeND">
+						<label for="planeND">ND</label><br>
+
+						<button onclick="func(this)">Submit</button>
+					</div>
+				</div>
+
+				<div class="module">
+					<div class="line-setup">
+						<h2>Select Format:</h2>
+						<input type="radio" name="line-type" value="lineAB" id="lineAB">
+						<label for="lineAB">AB</label><br>
+
+						<button onclick="func(this)">Submit</button>
+					</div>
+				</div>
+
+				<div class="module">
+					<div class="line-input line-ab">
+						<h2>Line (L1)</h2>
+						<table>
+							<tr>
+								<td rowspan="3">
+									<i>l</i>:
+								</td>
+								<td rowspan="3">
+									r=(
+								</td>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+								<td rowspan="3">
+									)+t(
+								</td>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+								<td rowspan="3">
+									)
+								</td>
+								<td rowspan="3">
+									<input type="button" value="Set">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				
+				<div class="module">
+					<div class="plane-input plane-nd">
+						<h2>Plane (P3)</h2>
+						<table>
+							<tr>
+								<td rowspan="3">
+									<i>&Pi;</i>:
+								</td>
+								<td rowspan="3">
+									r.(
+								</td>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+								<td rowspan="3">
+									)=
+								</td>
+								<td rowspan="3">
+									<input class="sml-input" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input class="sml-input" type="number">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- Operations -->
+			<div id="side-bottom">
+
+			</div>
+		</div>
+		<main></main> <!-- Graph will go here -->
+	<div ></div>
+	</body>
+</html>
