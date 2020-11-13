@@ -19,75 +19,30 @@
 			<hr>
 			<!-- Lines & Planes List -->
 			<div id="side-middle">
-				<div class="module">
-					<div class="plane-setup">
-						<h2>Select Format:</h2>
-						<input type="radio" name="plane-type" value="planeABC" id="planeABC">
-						<label for="planeABC">ABC</label><br>
-						<input type="radio" name="plane-type" value="planeAN" id="planeAN">
-						<label for="planeAN">AN</label><br>
-						<input type="radio" name="plane-type" value="planeND" id="planeND">
-						<label for="planeND">ND</label><br>
-
-						<button onclick="func(this)">Submit</button>
-					</div>
-				</div>
 
 				<div class="module">
-					<div class="line-setup">
-						<h2>Select Format:</h2>
-						<input type="radio" name="line-type" value="lineAB" id="lineAB">
-						<label for="lineAB">AB</label><br>
-
-						<button onclick="func(this)">Submit</button>
-					</div>
-				</div>
-
-				<div class="module">
-					<div class="line-input line-ab">
 						<h2>Line (L1)</h2>
-						<table>
-							<tr>
-								<td rowspan="3">
-									<i>l</i>:
-								</td>
-								<td rowspan="3">
-									r=(
-								</td>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
-								<td rowspan="3">
-									)+t(
-								</td>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
-								<td rowspan="3">
-									)
-								</td>
-								<td rowspan="3">
-									<input type="button" value="Set">
-								</td>
+						<table class="byCol">
+							<tr class="byCol">
+								<td class="byCol"><i>l</i>:r=(</td>
 							</tr>
-							<tr>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
+							<tr class="byCol">
+								<td class="byCol"><input class="sml-input" type="number"></td>
+								<td class="byCol"><input class="sml-input" type="number"></td>
+								<td class="byCol"><input class="sml-input" type="number"></td>
 							</tr>
-							<tr>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
-								<td>
-									<input class="sml-input" type="number">
-								</td>
+							<tr class="byCol">
+								<td class="byCol">+&lambda;</td>
+							</tr>
+							<tr class="byCol">
+								<td class="byCol"><input class="sml-input" type="number"></td>
+								<td class="byCol"><input class="sml-input" type="number"></td>
+								<td class="byCol"><input class="sml-input" type="number"></td>
+							</tr>
+							<tr class="byCol">
+								<td class="byCol">)</td>
 							</tr>
 						</table>
-					</div>
 				</div>
 
 				
