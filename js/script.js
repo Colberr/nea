@@ -1,3 +1,45 @@
+class ModuleParts {
+	constructor() {
+		this.tr = document.createElement("tr");
+		this.tr.setAttribute("class","byCol");
+
+		this.td = document.createElement("td");
+		this.td.setAttribute("class","byCol");
+	}
+
+	cleartrtd() {
+		this.tr.innerHTML = "";
+		this.td.innerHTML = "";
+	}
+
+	createColumn(table,td,n=1) {
+		for (var i=0;i<n;i++) {
+			this.tr.appendChild(td.cloneNode(true));
+		}
+		table.appendChild(this.tr.cloneNode(true));
+
+		return table;
+	}
+
+	columnVectorInput(table) {
+		this.td.innerHTML = '<input class="sml-input" type="number">';
+		table = this.createColumn(table,this.td,3);
+
+		this.cleartrtd();
+		return table;
+	}
+
+	singleInput(table) {
+		this.td.innerHTML = '<input class="sml-input" type="number">';
+		table = this.createColumn(table,this.td);
+
+		this.cleartrtd();
+		return table;
+	}
+}
+
+var mp = new ModuleParts;
+
 class Sidebar {
 	constructor() {
 		this.modules = {};
@@ -23,47 +65,51 @@ class Sidebar {
 		return s.toString(36);
 	}
 
-	addLineModule() {
+	addNewModule(type) {
 		var hash = this.createHash();
-		var module = new LineModule(hash);
 
-		this.modules[hash] = module;
+		if (type == "line") {
+			var module = new LineModule(hash);
+		} 
+		else if (type == "plane") {
+			var module = new PlaneModule(hash);
+		} else {
+			return false;
+		}
+
+		this.modules[module.id] = module;
 		document.getElementById("side-middle").appendChild(module.module);
 	}
 }
 
-class LineModule {
-	constructor(id) {
-		this.id = "l" + id;
-		this.state = "setup";
+class Module {
+	constructor() {
+		this.state = "formatSelect";
 
 		this.module = document.createElement("div");
 		this.module.setAttribute("class","module");
-		this.module.setAttribute("id",this.id);
-
-		this.setup();
 	}
 
-	setup() {
-		const options = ["lineAB"];
-		const id = this.id;
-		 
+	showFormatSelector() {
+		this.module.setAttribute("id",this.id);
+		this.module.innerHTML = "";
+
 		var header = document.createElement("h2");
 		header.innerHTML = "Selection Format:";
 		this.module.appendChild(header);
 
 		// Loops through each relevant radio option (as defined at start of function)
-		for (var i=0;i<options.length;i++) {
+		for (var i=0;i<this.formatOptions.length;i++) {
 			var radio = document.createElement("input");
 			radio.setAttribute("type","radio");
 			radio.setAttribute("name",this.id + "-" + "format");
-			radio.setAttribute("value",options[i]);
-			radio.setAttribute("id",this.id + "-" + options[i]);
+			radio.setAttribute("value",this.formatOptions[i]);
+			radio.setAttribute("id",this.id + "-" + this.formatOptions[i]);
 			this.module.appendChild(radio);
 
 			var label = document.createElement("label");
-			label.setAttribute("for",this.id + "-" + options[i])
-			label.innerHTML = options[i];
+			label.setAttribute("for",this.id + "-" + this.formatOptions[i])
+			label.innerHTML = this.formatOptions[i];
 			this.module.appendChild(label);
 
 			var br = document.createElement("br");
@@ -77,87 +123,63 @@ class LineModule {
 	
 	}
 
+	showValueInput(format) {
+		this.module.innerHTML = "";
+			
+		var header = document.createElement("h2");
+		header.innerHTML = "Create line (" + format + "):";
+		this.module.appendChild(header);
+
+		var table = document.createElement("table");
+		table.setAttribute("class","byCol"); // byCol class means that tables are created by column instead of row, see XXXXXXX
+
+		table = mp.columnVectorInput(table);
+		table = mp.columnVectorInput(table);
+
+		this.module.appendChild(table);
+
+	}
 
 }
+
+class LineModule extends Module {
+	constructor(id) {
+		super();
+		this.id = "l" + id;
+		this.formatOptions = ["lineAB"];
+		
+		this.showFormatSelector();
+	}
+}
+
+class PlaneModule extends Module {
+	constructor(id) {
+		super();
+		this.id = "p" + id;
+		this.formatOptions = ["planeABC","planeAN","planeND"];
+		
+		this.showFormatSelector();
+	}
+}
+
+
+// -------------------------------------
 
 var x = new Sidebar;
 
-function createNewModule(type) {
-	if (type == "line") {
-		x.addLineModule();
-	} 
-	else if (type == "plane") {
-		x.addPlaneModule();
-	} else {}
-}
+function createNewModule(type) { x.addNewModule(type) };
 
 function chooseFormat(element) {
 	var id = element.parentNode.id;
 
-	// *****
+	x.modules[id].showValueInput("testing");
 }
 
 // ---------------------------------------
 
-var allowCreation = true;
-
-function func(e) {
-	var div = e.parentNode;
-	var type = div.id;
-	console.log(type);
-}
 
 // ---------------------------------------
 
-// function createNewModule(n,e="") {
-// 	// n=0 : line format selection
-// 	// n=1 : plane format selection
-// 	//
-// 	// n=2 : lineAB
-// 	// n=3 : planeABC
-// 	// n=4 : planeAN
-// 	// n=5 : planeND
-
-// 	if ((n == 0 || n == 1) && allowCreation) {
-// 		allowCreation = false;
-// 		n = parseInt(n)
-// 		const radios = [
-// 			["lineAB"],
-// 			["planeABC","planeAN","planeND"]
-// 		]
-
-// 		var module = document.createElement("div");
-// 		module.setAttribute("class","module");
-		 
-// 		var header = document.createElement("h2");
-// 		header.innerHTML = "Selection Format:";
-// 		module.appendChild(header);
-
-// 		// Loops through each relevant radio option (as defined at start of function)
-// 		radios[n].forEach(function (elem, index) {
-// 			var radio = document.createElement("input");
-// 			radio.setAttribute("type","radio");
-// 			radio.setAttribute("name","format");
-// 			radio.setAttribute("value",elem);
-// 			radio.setAttribute("id",elem);
-// 			module.appendChild(radio);
-
-// 			var label = document.createElement("label");
-// 			label.setAttribute("for",elem)
-// 			label.innerHTML = elem;
-// 			module.appendChild(label);
-
-// 			var br = document.createElement("br");
-// 			module.appendChild(br);
-// 		});
-
-// 		var button = document.createElement("button");
-// 		button.setAttribute("onclick","createNewModule(5,this)");		// ****Need to change the 5 to be based on what format is selected with the radio buttons
-// 		button.innerHTML = "Submit";
-// 		module.appendChild(button);
-	
-// 		document.getElementById("side-middle").appendChild(module);
-// 	} 
 // 	else if (n == 2) {
 // 		allowCreation = true;
 // 		var module = document.createElement("div");
