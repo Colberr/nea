@@ -17,6 +17,7 @@ class ModuleParts {
 			this.tr.appendChild(td.cloneNode(true));
 		}
 		table.appendChild(this.tr.cloneNode(true));
+		this.cleartrtd();
 
 		return table;
 	}
@@ -25,7 +26,6 @@ class ModuleParts {
 		this.td.innerHTML = '<input class="sml-input" type="number">';
 		table = this.createColumn(table,this.td,3);
 
-		this.cleartrtd();
 		return table;
 	}
 
@@ -33,7 +33,13 @@ class ModuleParts {
 		this.td.innerHTML = '<input class="sml-input" type="number">';
 		table = this.createColumn(table,this.td);
 
-		this.cleartrtd();
+		return table;
+	}
+
+	singleString(table,string) {
+		this.td.innerHTML = string;
+		table = this.createColumn(table,this.td);
+
 		return table;
 	}
 }
@@ -48,9 +54,10 @@ class Sidebar {
 	createHash() {
 		var d = new Date;
 		var x = d.getTime();
-		x = x.toString(10).split('').map(Number);
+		x = x.toString(10).split('').map(Number); // Splits the time (in milliseconds) into an array of integers
 		var s = 0;
 
+		// See OneNote (XXXXXXXX) for details
 		for (var i=0;i<Math.floor(x.length / 2);i++) {
 			var a = x[i+1];
 			var b = x[i+1+Math.floor(x.length / 2)];
@@ -61,7 +68,7 @@ class Sidebar {
 			}
 		}
 
-		s = s % 9973;
+		s = s % 9973; // Just a big prime number to reduce the length
 		return s.toString(36);
 	}
 
@@ -107,6 +114,7 @@ class Module {
 			radio.setAttribute("id",this.id + "-" + this.formatOptions[i]);
 			this.module.appendChild(radio);
 
+			// Label elements means that you can click on the text and it'll still select that radio button
 			var label = document.createElement("label");
 			label.setAttribute("for",this.id + "-" + this.formatOptions[i])
 			label.innerHTML = this.formatOptions[i];
@@ -127,17 +135,61 @@ class Module {
 		this.module.innerHTML = "";
 			
 		var header = document.createElement("h2");
-		header.innerHTML = "Create line (" + format + "):";
+		header.innerHTML = "Input values (" + format + "):";
 		this.module.appendChild(header);
 
 		var table = document.createElement("table");
 		table.setAttribute("class","byCol"); // byCol class means that tables are created by column instead of row, see XXXXXXX
 
-		table = mp.columnVectorInput(table);
-		table = mp.columnVectorInput(table);
+		switch (format) {
+			case "lineAB":
+				table = mp.singleString(table,"<i>l</i>:r=(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")+&lambda;(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")");
+				break;
+			case "planeABC":
+				table = mp.singleString(table,"<i>&Pi;</i>:r=(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")+&lambda;(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")+&mu;(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")");
+				break;
+			case "planeAN":
+				table = mp.singleString(table,"<i>&Pi;</i>:r.(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")=(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,").(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")");
+				break;
+			case "planeND":
+				table = mp.singleString(table,"<i>&Pi;</i>:r.(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")=");
+				table = mp.singleInput(table);
+				break;
+			default:
+				this.module.innerHTML = "";
+				return false;
+		}
 
+		var button1 = document.createElement("button");
+		button1.setAttribute("onclick","chooseFormat(this)"); // ***** XXXXXXX
+		button1.innerHTML = "Set";
+		table.appendChild(button1);
+		
+		var button2 = document.createElement("button");
+		button2.setAttribute("onclick","chooseFormat(this)"); // ***** XXXXXXX
+		button2.innerHTML = "Change Format";
+		table.appendChild(button2);
+		
 		this.module.appendChild(table);
-
+		return table;
 	}
 
 }
@@ -170,9 +222,18 @@ var x = new Sidebar;
 function createNewModule(type) { x.addNewModule(type) };
 
 function chooseFormat(element) {
-	var id = element.parentNode.id;
+	var module = element.parentNode;
+	var radios = module.getElementsByTagName("input");
+	var format;
 
-	x.modules[id].showValueInput("testing");
+	for (var i=0;i<radios.length;i++){
+		if (radios[i].checked) {
+			format = radios[i].value;
+			break;
+		}
+	}
+	
+	x.modules[module.id].showValueInput(format);
 }
 
 // ---------------------------------------
