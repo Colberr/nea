@@ -26,7 +26,6 @@ class Plane {
 // Whole Graph
 class Graph {
 	constructor() {
-		this.nextId = -1;
 		this.axisLen = 100;
 		this.content = {};
 	}
@@ -124,39 +123,36 @@ class Graph {
 
 	// ------------------------
 	// Creating Lines & Planes
-	createLineFromAB(a,b) {
+	createLineFromAB(a,b,id) {
 		// l: r = a + λb
 		if (this.notValid([a,b])) { return false };
 		
-		this.nextId += 1;
-		this.content[this.nextId] = new Line(a,b);
-		return this.content[this.nextId];
+		this.content[id] = new Line(a,b);
+		return this.content[id];
 	}
 	
-	createPlaneFromND(n,d) {
+	createPlaneFromND(n,d,id) {
 		// Π: r.n = d
 		if (this.notValid([n])) { return false };
 		
-		this.nextId += 1;
-		this.content[this.nextId] = new Plane(n,d);
-		return this.content[this.nextId];
+		this.content[id] = new Plane(n,d);
+		return this.content[id];
 	}
 
-	createPlaneFromAN(a,n) {
+	createPlaneFromAN(a,n,id) {
 		// Π: r.n = a.n
 		if (this.notValid([a,n])) { return false };
 		
-		this.nextId += 1;
-		this.content[this.nextId] = new Plane(n,this.dot(a,n),a);
-		return this.content[this.nextId];
+		this.content[id] = new Plane(n,this.dot(a,n),a);
+		return this.content[id];
 	}
 	
-	createPlaneFromABC(a,b,c) {
+	createPlaneFromABC(a,b,c,id) {
 		// Π: r = a + λb + μc --> Π: r.n = a.n
 		if (this.notValid([a,b,c])) { return false };
 		
 		let n = this.cross(this.subtract(a,b),this.subtract(a,c));
-		return this.createPlaneFromAN(a,n);
+		return this.createPlaneFromAN(a,n,id);
 	}
 	
 	// ------------------------
@@ -281,7 +277,3 @@ class Graph {
 		return Math.abs(this.dot(plane.normal,p) - plane.constant) / this.mag(plane.normal);
 	}
 }
-
-var g = new Graph;
-
-// console.log(Object.getOwnPropertyNames(Graph.prototype));

@@ -43,4 +43,14 @@ class ModuleParts {
 
 		return table;
 	}
+
+	addButton(table,value,onclick) {
+		var btn = document.createElement("button");
+		btn.innerHTML = value;
+		btn.setAttribute("onclick",onclick)
+		this.td.appendChild(btn);
+		table = this.createColumn(table,this.td);
+
+		return table;
+	}
 }
