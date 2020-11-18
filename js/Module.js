@@ -1,8 +1,18 @@
+// Stuff for MathJax
+let promise = Promise.resolve();
+
+function typeset(code) {
+	promise = promise.then(() => {return MathJax.typesetPromise(code());})
+		.catch((err) => console.log('Typeset failed: ' + err.message));
+	return promise;
+}
+
 // Classes for defining line or plane module objects
 class Module {
 	constructor() {
 		this.state = "#";
 		this.format = "#";
+		this.equation = "#";
 
 		this.module = document.createElement("div");
 		this.module.setAttribute("class","module");
@@ -99,32 +109,34 @@ class Module {
 		return table;
 	}
 
-	showCurrentValues() {
+	prepareEquation() {
 		this.module.innerHTML = "";
+		var div = document.createElement("div");
 			
 		var header = document.createElement("h2");
 		header.innerHTML = "Current values (" + this.format + "):";
-		this.module.appendChild(header);
+		div.appendChild(header);
 
-		switch (this.format) {
-			case "lineAB":
-				var values = this.getValues();
-				// $l:\textit{\textbf{r}}=\begin{pmatrix} a_1 \\ a_2 \\ a_3 \end{pmatrix}+\lambda\begin{pmatrix} b_1 \\ b_2 \\ b_3 \end{pmatrix}$
-				break;
-		}
+		var equation = document.createElement("div");
+		equation.setAttribute("class","equation");
+		div.appendChild(equation);
 
-		var button1 = document.createElement("button");
-		button1.setAttribute("onclick","chooseFormat(this)"); // ***** XXXXXXX
-		button1.innerHTML = "Set";
-		this.module.appendChild(button1);
+		typeset(() => {
+			equation.innerHTML = this.equation;
+		});
 		
-		var button2 = document.createElement("button");
-		button2.setAttribute("onclick","chooseFormat(this)"); // ***** XXXXXXX
-		button2.innerHTML = "Change Format";
-		this.module.appendChild(button2);
+		return div;
+	}
+
+	showEquation() {
+		var div = this.prepareEquation();
+		this.module.appendChild(div);
 		
-		this.module.appendChild(table);
-		return table;
+		var button = document.createElement("button");
+		button.setAttribute("onclick","editValues(this)"); // ***** XXXXXXX
+		button.innerHTML = "Edit Values";
+		this.module.appendChild(button);
+
 	}
 }
 
@@ -143,7 +155,10 @@ class LineModule extends Module {
 				var posV = values.slice(0,3);
 				var dirV = values.slice(3,6);
 
-				return g.createLineFromAB(posV,dirV,this.id);
+				this.equation = '$$r=\\colv{' + posV[0] + '\\\\' + posV[1] + '\\\\' + posV[2] + '}+\\lambda\\colv{' + dirV[0] + '\\\\' + dirV[1] + '\\\\' + dirV[2] + '}$$';
+				this.showEquation();
+
+				return graph.createLineFromAB(posV,dirV,this.id);
 			default:
 				return false;
 		}
@@ -166,17 +181,17 @@ class PlaneModule extends Module {
 				var b = values.slice(3,6);
 				var b = values.slice(6,9);
 
-				return g.createPlaneFromABC(a,b,c,this.id);
+				return graph.createPlaneFromABC(a,b,c,this.id);
 			case "planeAN":
 				var n = values.slice(0,3);
 				var a = values.slice(3,6);
 
-				return g.createPlaneFromAN(a,n,this.id);
+				return graph.createPlaneFromAN(a,n,this.id);
 			case "planeND":
 				var n = values.slice(0,3);
 				var d = values[3];
 
-				return g.createPlaneFromND(n,d,this.id);
+				return graph.createPlaneFromND(n,d,this.id);
 			default:
 				return false;
 		}

@@ -35,3 +35,8 @@ table tr.byCol {
 table tr td.byCol {
 	display: block;
 }
+
+/* Equation block */
+.equation {
+	width: 70%;
+}

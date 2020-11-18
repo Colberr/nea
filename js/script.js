@@ -30,9 +30,9 @@ function chooseFormat(element) {
 function setValues(element) {
 	var module = element.parentNode.parentNode.parentNode.parentNode;
 
+	// Getting the input values into a single array (that is then parsed through  LineModule/ PlaneModule methods)
 	var values = [];
 	var inputs = module.getElementsByTagName("input");
-
 	for (var i=0;i<inputs.length;i++) {
 		values.push(parseInt(inputs[i].value));
 	} 
