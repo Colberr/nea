@@ -32,15 +32,17 @@ class Module {
 			var radio = document.createElement("input");
 			radio.setAttribute("type","radio");
 			radio.setAttribute("name",this.id + "-" + "format");
-			radio.setAttribute("value",this.formatOptions[i]);
-			radio.setAttribute("id",this.id + "-" + this.formatOptions[i]);
+			radio.setAttribute("value",this.formatOptions[i][0]);
+			radio.setAttribute("id",this.id + "-" + this.formatOptions[i][0]);
 			this.module.appendChild(radio);
 
 			// Label elements means that you can click on the text and it'll still select that radio button
-			var label = document.createElement("label");
-			label.setAttribute("for",this.id + "-" + this.formatOptions[i])
-			label.innerHTML = this.formatOptions[i];
-			this.module.appendChild(label);
+			// var label = document.createElement("label");
+			// label.setAttribute("for",this.id + "-" + this.formatOptions[i][0])
+			// label.innerHTML = this.prepareEquation(this.formatOptions[i][1]);
+			var x = this.prepareEquation(this.formatOptions[i][1]);
+			console.log(x);
+			this.module.appendChild(x);
 
 			var br = document.createElement("br");
 			this.module.appendChild(br);
@@ -109,31 +111,29 @@ class Module {
 		return table;
 	}
 
-	prepareEquation() {
-		this.module.innerHTML = "";
-		var div = document.createElement("div");
-			
-		var header = document.createElement("h2");
-		header.innerHTML = "Current values (" + this.format + "):";
-		div.appendChild(header);
-
-		var equation = document.createElement("div");
+	prepareEquation(myEq) {
+		var equation = document.createElement("span");
 		equation.setAttribute("class","equation");
-		div.appendChild(equation);
 
 		typeset(() => {
-			equation.innerHTML = this.equation;
+			equation.innerHTML = myEq;
 		});
 		
-		return div;
+		return equation;
 	}
 
 	showEquation() {
-		var div = this.prepareEquation();
+		this.module.innerHTML = "";
+			
+		var header = document.createElement("h2");
+		header.innerHTML = "Current values (" + this.format + "):";
+		this.module.appendChild(header);
+
+		var div = this.prepareEquation(this.equation);
 		this.module.appendChild(div);
 		
 		var button = document.createElement("button");
-		button.setAttribute("onclick","editValues(this)"); // ***** XXXXXXX
+		button.setAttribute("onclick","editValues(this)");
 		button.innerHTML = "Edit Values";
 		this.module.appendChild(button);
 
@@ -144,7 +144,7 @@ class LineModule extends Module {
 	constructor(id) {
 		super();
 		this.id = "l" + id;
-		this.formatOptions = ["lineAB"];
+		this.formatOptions = [["lineAB",'$$l:r=a+\\lambda b$$']];
 		
 		this.showFormatSelector();
 	}
@@ -169,7 +169,11 @@ class PlaneModule extends Module {
 	constructor(id) {
 		super();
 		this.id = "p" + id;
-		this.formatOptions = ["planeABC","planeAN","planeND"];
+		this.formatOptions = [
+			["planeABC",'$$\\Pi :r=a+\\lambda b+\\mu c$$'],
+			["planeAN",'$$\\Pi :r.n=a.n$$'],
+			["planeND",'$$\\Pi :r.n=d$$']
+		];
 		
 		this.showFormatSelector();
 	}
@@ -179,17 +183,26 @@ class PlaneModule extends Module {
 			case "planeABC":
 				var a = values.slice(0,3);
 				var b = values.slice(3,6);
-				var b = values.slice(6,9);
+				var c = values.slice(6,9);
+
+				this.equation = '$$r=\\colv{' + a[0] + '\\\\' + a[1] + '\\\\' + a[2] + '}+\\lambda\\colv{' + b[0] + '\\\\' + b[1] + '\\\\' + b[2] + '}+\\mu\\colv{' + c[0] + '\\\\' + c[1] + '\\\\' + c[2] + '}$$';
+				this.showEquation();
 
 				return graph.createPlaneFromABC(a,b,c,this.id);
 			case "planeAN":
 				var n = values.slice(0,3);
 				var a = values.slice(3,6);
 
+				this.equation = '$$r.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}=\\colv{' + a[0] + '\\\\' + a[1] + '\\\\' + a[2] + '}.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}$$';
+				this.showEquation();
+
 				return graph.createPlaneFromAN(a,n,this.id);
 			case "planeND":
 				var n = values.slice(0,3);
 				var d = values[3];
+
+				this.equation = '$$r.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}=' + d + '$$';
+				this.showEquation();
 
 				return graph.createPlaneFromND(n,d,this.id);
 			default:
