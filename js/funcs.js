@@ -151,7 +151,7 @@ class Graph {
 		// Π: r = a + λb + μc --> Π: r.n = a.n
 		if (this.notValid([a,b,c])) { return false };
 		
-		let n = this.cross(this.subtract(a,b),this.subtract(a,c));
+		let n = this.cross(b,c);
 		return this.createPlaneFromAN(a,n,id);
 	}
 	
