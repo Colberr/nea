@@ -48,6 +48,7 @@ class Module {
 		this.module.appendChild(
 			mp.createButton("Submit","chooseFormat(this.id)",this.id)
 		);
+		this.module.appendChild(mp.createDeleteButton(this.id));
 
 		return this.id;
 	}
@@ -83,11 +84,16 @@ class Module {
 				break;
 			case "planeAN":
 				table = mp.singleString(table,"<i>&Pi;</i>:r.(");
-				table = mp.columnVectorInput(table);
+				// See script.js, typingNormal() for details on this
+				table = mp.manualColumnVectorInput(table,
+					'<input class="sml-input typingNormal" type="number" oninput="typingNormal(this)">'
+				);
 				table = mp.singleString(table,")=(");
 				table = mp.columnVectorInput(table);
 				table = mp.singleString(table,").(");
-				table = mp.columnVectorInput(table);
+				table = mp.manualColumnVectorInput(table,
+					'<input class="sml-input settingNormal" type="number" readonly>'
+				);
 				table = mp.singleString(table,")");
 				break;
 			case "planeND":
@@ -110,6 +116,7 @@ class Module {
 		this.module.appendChild(
 			mp.createButton("Change Format","changeFormat(this.id)",this.id)
 		);
+		this.module.appendChild(mp.createDeleteButton(this.id));
 
 		return this.id;
 	}
@@ -139,6 +146,7 @@ class Module {
 		this.module.appendChild(
 			mp.createButton("Edit Values","editValues(this.id)",this.id)
 		);
+		this.module.appendChild(mp.createDeleteButton(this.id));
 
 		return this.id;
 	}

@@ -41,4 +41,9 @@ class Sidebar {
 		this.modules[module.id] = module;
 		document.getElementById("side-middle").appendChild(module.module);
 	}
+
+	deleteModule(id) {
+		document.getElementById(id).remove();
+		delete this.modules[id];
+	}
 }

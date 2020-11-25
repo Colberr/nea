@@ -13,19 +13,19 @@ function clickFormat(id) {
 function chooseFormat(id) {
 	var module = document.getElementById(id);
 	var radios = module.getElementsByTagName("input");
-	var format;
+	var chosenFormat;
 
 	// No specific way to check which radio button is checked, so you have to loop through them
 	for (var i=0;i<radios.length;i++){
 		if (radios[i].checked) {
-			format = radios[i].value;
+			chosenFormat = radios[i].value;
 			break;
 		}
 	}
 
 	// Check that a box was actually checked
-	if (format) {
-		sidebar.modules[module.id].showValueInput(format);
+	if (chosenFormat) {
+		sidebar.modules[id].showValueInput(chosenFormat);
 	} else {
 		return false;
 	}
@@ -41,5 +41,31 @@ function setValues(id) {
 		values.push(parseInt(inputs[i].value));
 	} 
 
-	return sidebar.modules[module.id].parseValues(values);
+	return sidebar.modules[id].parseValues(values);
+}
+
+function deleteModule(id) {
+	sidebar.deleteModule(id);
+
+	return sidebar.modules;
+}
+
+function changeFormat(id) {
+	sidebar.modules[id].showFormatSelector();
+}
+
+function editValues(id) {
+	var currentFormat = sidebar.modules[id].format;
+	sidebar.modules[id].showValueInput(currentFormat);
+}
+
+function typingNormal() {
+	// When inputting values for plane format r.n = a.n, both n's must be the same
+	// Therefore, the second n is readonly and is filled by whatever is typing in the first column
+	var x = document.getElementsByClassName("typingNormal");
+	var y = document.getElementsByClassName("settingNormal");
+
+	for (var i=0;i<3;i++) {
+		y[i].value = x[i].value;
+	}
 }

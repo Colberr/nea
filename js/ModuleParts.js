@@ -33,6 +33,13 @@ class ModuleParts {
 		return table;
 	}
 
+	manualColumnVectorInput(table,input) {
+		this.td.innerHTML = input;
+		table = this.createColumn(table,this.td,3);
+
+		return table;
+	}
+
 	singleInput(table) {
 		this.td.innerHTML = '<input class="sml-input" type="number">';
 		table = this.createColumn(table,this.td);
@@ -62,5 +69,10 @@ class ModuleParts {
 		btn.setAttribute("id",id);
 		btn.innerHTML = value;
 		return btn;
+	}
+
+	// Preset function for creating a Delete Module button
+	createDeleteButton(id) {
+		return this.createButton("Delete Module","deleteModule(this.id)",id)
 	}
 }
