@@ -24,6 +24,7 @@ class Module {
 		this.module.setAttribute("id",this.id);
 		this.module.innerHTML = "";
 
+		// Header
 		this.module.appendChild(
 			mp.createHeader("Select Format:")
 		);
@@ -45,6 +46,7 @@ class Module {
 			this.module.appendChild(equationSpan);
 		}
 
+		// Buttons
 		this.module.appendChild(
 			mp.createButton("Submit","chooseFormat(this.id)",this.id)
 		);
@@ -58,12 +60,13 @@ class Module {
 		this.format = format;
 		this.module.innerHTML = "";
 			
-		var header = document.createElement("h2");
-		header.innerHTML = "Input values (" + this.format + "):";
-		this.module.appendChild(header);
+		// Header
+		this.module.appendChild(
+			mp.createHeader("Input values:")
+		);
 
 		var table = document.createElement("table");
-		table.setAttribute("class","byCol"); // byCol class means that tables are created by column instead of row, see XXXXXXX
+		table.setAttribute("class","byCol"); // byCol class means that tables are created by column instead of row
 
 		switch (this.format) {
 			case "lineAB":
@@ -110,6 +113,7 @@ class Module {
 		this.module.appendChild(table);
 		this.module.innerHTML += "<br>";
 
+		// Buttons
 		this.module.appendChild(
 			mp.createButton("Set","setValues(this.id)",this.id)
 		);
@@ -135,14 +139,19 @@ class Module {
 	// This is the actual display state, use this.prepareEquation() for the format selector 
 	displayEquation() {
 		this.module.innerHTML = "";
-			
-		var header = document.createElement("h2");
-		header.innerHTML = "Current values (" + this.format + "):";
-		this.module.appendChild(header);
+		
+		// Header
+		if (this.id.charAt(0) == "l") {
+			this.module.appendChild(mp.createHeader("Line Equation:"));
+		} else {
+			this.module.appendChild(mp.createHeader("Plane Equation:"));
+		}
 
+		// Actual MathJax Equation
 		var div = this.prepareEquation(this.equation);
 		this.module.appendChild(div);
 		
+		// Buttons
 		this.module.appendChild(
 			mp.createButton("Edit Values","editValues(this.id)",this.id)
 		);
