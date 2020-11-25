@@ -43,8 +43,6 @@ class Module {
 			equationSpan.setAttribute("id",this.id + "-" + this.formatOptions[i][0]);
 			equationSpan.setAttribute("onclick","clickFormat(this.id)");
 			this.module.appendChild(equationSpan);
-
-			this.module.innerHTML += "<br>";
 		}
 
 		this.module.appendChild(
@@ -192,7 +190,7 @@ class PlaneModule extends Module {
 				var c = values.slice(6,9);
 
 				this.equation = '$$r=\\colv{' + a[0] + '\\\\' + a[1] + '\\\\' + a[2] + '}+\\lambda\\colv{' + b[0] + '\\\\' + b[1] + '\\\\' + b[2] + '}+\\mu\\colv{' + c[0] + '\\\\' + c[1] + '\\\\' + c[2] + '}$$';
-				this.showEquation();
+				this.displayEquation();
 
 				return graph.createPlaneFromABC(a,b,c,this.id);
 			case "planeAN":
@@ -200,7 +198,7 @@ class PlaneModule extends Module {
 				var a = values.slice(3,6);
 
 				this.equation = '$$r.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}=\\colv{' + a[0] + '\\\\' + a[1] + '\\\\' + a[2] + '}.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}$$';
-				this.showEquation();
+				this.displayEquation();
 
 				return graph.createPlaneFromAN(a,n,this.id);
 			case "planeND":
@@ -208,7 +206,7 @@ class PlaneModule extends Module {
 				var d = values[3];
 
 				this.equation = '$$r.\\colv{' + n[0] + '\\\\' + n[1] + '\\\\' + n[2] + '}=' + d + '$$';
-				this.showEquation();
+				this.displayEquation();
 
 				return graph.createPlaneFromND(n,d,this.id);
 			default:
