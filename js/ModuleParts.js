@@ -8,6 +8,9 @@ class ModuleParts {
 		this.td.setAttribute("class","byCol");
 	}
 
+	// ----------------------------------------------
+	// Functions for the table
+
 	cleartrtd() {
 		this.tr.innerHTML = "";
 		this.td.innerHTML = "";
@@ -44,13 +47,20 @@ class ModuleParts {
 		return table;
 	}
 
-	addButton(table,value,onclick) {
-		var btn = document.createElement("button");
-		btn.innerHTML = value;
-		btn.setAttribute("onclick",onclick)
-		this.td.appendChild(btn);
-		table = this.createColumn(table,this.td);
+	// ----------------------------------------------
+	// Functions that go straight in the Module
 
-		return table;
+	createHeader(value) {
+		var h2 = document.createElement("h2");
+		h2.innerHTML = value;
+		return h2;
+	}
+
+	createButton(value,onclick,id) {
+		var btn = document.createElement("button");
+		btn.setAttribute("onclick",onclick)
+		btn.setAttribute("id",id);
+		btn.innerHTML = value;
+		return btn;
 	}
 }

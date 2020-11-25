@@ -6,8 +6,12 @@ var graph = new Graph;
 
 function createNewModule(type) { sidebar.addNewModule(type) };
 
-function chooseFormat(element) {
-	var module = element.parentNode;
+function clickFormat(id) {
+	document.getElementsByClassName(id)[0].checked = true;
+}
+
+function chooseFormat(id) {
+	var module = document.getElementById(id);
 	var radios = module.getElementsByTagName("input");
 	var format;
 
@@ -27,8 +31,8 @@ function chooseFormat(element) {
 	}
 }
 
-function setValues(element) {
-	var module = element.parentNode.parentNode.parentNode.parentNode;
+function setValues(id) {
+	var module = document.getElementById(id);
 
 	// Getting the input values into a single array (that is then parsed through  LineModule/ PlaneModule methods)
 	var values = [];

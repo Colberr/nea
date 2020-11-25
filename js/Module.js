@@ -20,39 +20,38 @@ class Module {
 
 	showFormatSelector() {
 		this.state = "formatSelect";
+		this.format = "#";
 		this.module.setAttribute("id",this.id);
 		this.module.innerHTML = "";
 
-		var header = document.createElement("h2");
-		header.innerHTML = "Selection Format:";
-		this.module.appendChild(header);
+		this.module.appendChild(
+			mp.createHeader("Select Format:")
+		);
 
 		// Loops through each relevant radio option (as defined at start of function)
 		for (var i=0;i<this.formatOptions.length;i++) {
+			// Creates and sets up the radio button
 			var radio = document.createElement("input");
 			radio.setAttribute("type","radio");
 			radio.setAttribute("name",this.id + "-" + "format");
 			radio.setAttribute("value",this.formatOptions[i][0]);
-			radio.setAttribute("id",this.id + "-" + this.formatOptions[i][0]);
+			radio.setAttribute("class",this.id + "-" + this.formatOptions[i][0]);
 			this.module.appendChild(radio);
 
-			// Label elements means that you can click on the text and it'll still select that radio button
-			// var label = document.createElement("label");
-			// label.setAttribute("for",this.id + "-" + this.formatOptions[i][0])
-			// label.innerHTML = this.prepareEquation(this.formatOptions[i][1]);
-			var x = this.prepareEquation(this.formatOptions[i][1]);
-			console.log(x);
-			this.module.appendChild(x);
+			// Displays the actual equation formala (using MathJax via this.prepareEquation)
+			var equationSpan = this.prepareEquation(this.formatOptions[i][1]);
+			equationSpan.setAttribute("id",this.id + "-" + this.formatOptions[i][0]);
+			equationSpan.setAttribute("onclick","clickFormat(this.id)");
+			this.module.appendChild(equationSpan);
 
-			var br = document.createElement("br");
-			this.module.appendChild(br);
+			this.module.innerHTML += "<br>";
 		}
 
-		var button = document.createElement("button");
-		button.setAttribute("onclick","chooseFormat(this)");
-		button.innerHTML = "Submit";
-		this.module.appendChild(button);
-	
+		this.module.appendChild(
+			mp.createButton("Submit","chooseFormat(this.id)",this.id)
+		);
+
+		return this.id;
 	}
 
 	showValueInput(format) {
@@ -104,11 +103,17 @@ class Module {
 				return false;
 		}
 
-		table = mp.addButton(table,"Set","setValues(this)")
-		table = mp.addButton(table,"Change Format","changeFormat(this)")
-
 		this.module.appendChild(table);
-		return table;
+		this.module.innerHTML += "<br>";
+
+		this.module.appendChild(
+			mp.createButton("Set","setValues(this.id)",this.id)
+		);
+		this.module.appendChild(
+			mp.createButton("Change Format","changeFormat(this.id)",this.id)
+		);
+
+		return this.id;
 	}
 
 	prepareEquation(myEq) {
@@ -122,7 +127,8 @@ class Module {
 		return equation;
 	}
 
-	showEquation() {
+	// This is the actual display state, use this.prepareEquation() for the format selector 
+	displayEquation() {
 		this.module.innerHTML = "";
 			
 		var header = document.createElement("h2");
@@ -132,11 +138,11 @@ class Module {
 		var div = this.prepareEquation(this.equation);
 		this.module.appendChild(div);
 		
-		var button = document.createElement("button");
-		button.setAttribute("onclick","editValues(this)");
-		button.innerHTML = "Edit Values";
-		this.module.appendChild(button);
+		this.module.appendChild(
+			mp.createButton("Edit Values","editValues(this.id)",this.id)
+		);
 
+		return this.id;
 	}
 }
 
@@ -156,7 +162,7 @@ class LineModule extends Module {
 				var dirV = values.slice(3,6);
 
 				this.equation = '$$r=\\colv{' + posV[0] + '\\\\' + posV[1] + '\\\\' + posV[2] + '}+\\lambda\\colv{' + dirV[0] + '\\\\' + dirV[1] + '\\\\' + dirV[2] + '}$$';
-				this.showEquation();
+				this.displayEquation();
 
 				return graph.createLineFromAB(posV,dirV,this.id);
 			default:
