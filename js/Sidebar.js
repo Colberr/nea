@@ -46,4 +46,36 @@ class Sidebar {
 		document.getElementById(id).remove();
 		delete this.modules[id];
 	}
+
+	countLinesandPlanes() {
+		var lines = 0;
+		var planes = 0;
+
+		for (let id in this.modules) {
+			if (id.charAt(0) == "l" && this.modules[id].state == "displayEquation") {
+				lines++;
+			} 
+			else if (id.charAt(0) == "p" && this.modules[id].state == "displayEquation") {
+				planes++;
+			} else {}
+		}
+
+		return [lines, planes, 0];
+	}
+
+	possibleFunctions() {
+		var x = this.countLinesandPlanes();
+		var lines = x[0];
+		var planes = x[1];
+		var points = x[2];
+		var output = [];
+
+		for (let func in funcReqs) {
+			if (lines >= funcReqs[func][0] && planes >= funcReqs[func][1] && points >= funcReqs[func][2]) {
+				output.push(func);
+			}
+		}
+
+		return output;
+	}
 }
