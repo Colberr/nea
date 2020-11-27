@@ -139,6 +139,7 @@ class Module {
 	// This is the actual display state, use this.prepareEquation() for the format selector 
 	displayEquation() {
 		this.module.innerHTML = "";
+		this.state = "displayEquation";
 		
 		// Header
 		if (this.id.charAt(0) == "l") {
