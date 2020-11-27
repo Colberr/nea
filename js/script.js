@@ -3,6 +3,7 @@ var sidebar = new Sidebar;
 var graph = new Graph;
 
 // --------------------------------------------------
+// Object Functions
 
 function createNewModule(type) { sidebar.addNewModule(type) };
 
@@ -65,5 +66,26 @@ function typingNormal() {
 
 	for (var i=0;i<3;i++) {
 		y[i].value = x[i].value;
+	}
+}
+
+// --------------------------------------------------
+// HTML/ CSS Functions
+function collapseSideBottom() {
+	var arrow = document.getElementsByClassName("collapse-arrow")[0];
+	var sm = document.getElementById("side-middle");
+	var sb = document.getElementById("side-bottom");
+	var currentHeight = sb.offsetHeight;
+
+	if (currentHeight >= 60) {
+		// Currently up
+		sm.style.height = "calc(100% - 80px)";
+		sb.style.height = "50px";
+		arrow.style.transform = "rotate(225deg)";
+	} else {
+		// Currently down
+		sm.style.height = "calc(75% - 30px)";
+		sb.style.height = "25%";
+		arrow.style.transform = "rotate(45deg)";
 	}
 }

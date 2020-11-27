@@ -7,9 +7,37 @@ html, body {
 
 /* Areas */
 #side {
+	border-right: 1px solid grey;
 	height: 100%;
-	overflow-y: scroll;
+	margin: 0;
+	padding: 0;
 	width: 30%;
+}
+#side-top {
+	border-bottom: 1px solid grey;
+	height: 35px;
+	margin: 0;
+	padding: 5px 0 0 5px;
+	width: calc(100% - 5px);
+}
+
+#side-middle {
+	height: calc(75% - 35px);
+	margin: 0;
+	overflow-y: scroll;
+	padding: 0;
+
+	transition: all 700ms ease-out;
+}
+
+#side-bottom {
+	border-top: 1px solid grey;
+	height: 25%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+
+	transition: all 700ms ease-out;
 }
 
 /* Module Styles */
@@ -39,4 +67,19 @@ table tr td.byCol {
 /* Equation block */
 .equation {
 	width: 70%;
+}
+
+/* Side Bottom */
+.collapse-arrow {
+	border-bottom: 5px solid;
+	border-right: 5px solid;
+	bottom: 15px;
+	height: 20px;
+	left: 10px;
+	position: fixed;
+	width: 20px;
+	transform: rotate(45deg);
+	transform-origin: 75% 75%;
+
+	transition: all 700ms ease-out;
 }
