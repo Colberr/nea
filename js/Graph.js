@@ -1,3 +1,16 @@
+const funcReqs = {
+	"lineThroughPoint":[1,0,1],
+	"distanceLineToPoint":[1,0,1],
+	"relationshipTwoLines":[2,0,0],
+	"distanceLineToLine":[2,0,0],
+	"meetingPointTwoLines":[2,0,0],
+	"relationshipLineAndPlane":[1,1,0],
+	"distanceLineToPlane":[1,1,0],
+	"meetingPointLineAndPlane":[1,1,0],
+	"planeThroughPoint":[0,1,1],
+	"distancePlaneToPoint":[0,1,1]
+}
+
 // Line 
 class Line {
 	constructor(posV,dirV) {
@@ -250,7 +263,7 @@ class Graph {
 		if (this.dot(line.posV,plane.normal) == plane.constant) {
 			return line.posV;
 		} else {
-			var lambda = (plane.normal - this.dot(line.posV,plane.normal)) / this.dot(line.dirV,plane.normal)
+			var lambda = (plane.normal - this.dot(line.posV,plane.normal)) / this.dot(line.dirV,plane.normal) // XXX*** Not finished?
 		}
 	}
 
