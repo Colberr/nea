@@ -45,9 +45,7 @@ function setValues(id) {
 }
 
 function deleteModule(id) {
-	sidebar.deleteModule(id);
-
-	return sidebar.modules;
+	return sidebar.deleteModule(id);
 }
 
 function changeFormat(id) {
