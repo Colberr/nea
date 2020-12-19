@@ -9,7 +9,7 @@ class ModuleParts {
 	}
 
 	// ----------------------------------------------
-	// Functions for the table
+	// Functions for the table (they are added to the table, then the table is returned)
 
 	cleartrtd() {
 		this.tr.innerHTML = "";
@@ -33,6 +33,7 @@ class ModuleParts {
 		return table;
 	}
 
+	// input is a HTML DOM element (created in JS)
 	manualColumnVectorInput(table,input) {
 		this.td.innerHTML = input;
 		table = this.createColumn(table,this.td,3);
@@ -55,7 +56,7 @@ class ModuleParts {
 	}
 
 	// ----------------------------------------------
-	// Functions that go straight in the Module
+	// Functions that return the elements themselves
 
 	createHeader(value) {
 		var h2 = document.createElement("h2");

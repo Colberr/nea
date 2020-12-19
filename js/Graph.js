@@ -9,7 +9,7 @@ const funcReqs = {
 	"meetingPointLineAndPlane":[1,1,0],
 	"relationshipPlaneAndPoint":[0,1,1],
 	"distancePlaneToPoint":[0,1,1]
-}
+} // The number of lines, planes and points (respectively) that are required to use each function
 
 // Line 
 class Line {
@@ -94,8 +94,8 @@ class Graph {
 	}
 
 	subtract(a,b) {
-		// b - a --> (-a) + b
-		return this.add(this.scale(-1,a),b);
+		// a - b --> a + (-b)
+		return this.add(a,this.scale(-1,b));
 	}
 	
 	mag(a) {
@@ -146,7 +146,7 @@ class Graph {
 	}
 
 	// ------------------------
-	// Creating Lines & Planes
+	// Creating Lines, Planes & Points
 	createLineFromAB(a,b,id) {
 		// l: r = a + λb
 		if (this.notValid([a,b])) { return false };
@@ -215,7 +215,7 @@ class Graph {
 		
 		if (this.lineThroughPosition(line,p)) { return 0 };
 
-		let l2 = this.subtract(line.posV,p);
+		let l2 = this.subtract(p,line.posV);
 		let angle = this.dotAngle(l2,line.dirV);
 
 		return this.mag(l2) * Math.sin(this.toRad(angle));
@@ -245,7 +245,7 @@ class Graph {
 		let normal = this.cross(l1.dirV,l2.dirV)
 
 		return Math.abs(
-			this.dot(this.subtract(l2.posV,l1.posV), normal) / this.mag(normal)
+			this.dot(this.subtract(l1.posV,l2.posV), normal) / this.mag(normal)
 		);
 	}
 	

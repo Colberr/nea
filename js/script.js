@@ -3,7 +3,7 @@ var sidebar = new Sidebar;
 var graph = new Graph;
 
 // --------------------------------------------------
-// Object Functions
+// Object (Module) Functions
 
 function createNewModule(type) { sidebar.addNewModule(type) };
 
@@ -11,6 +11,7 @@ function clickFormat(id) {
 	document.getElementsByClassName(id)[0].checked = true;
 }
 
+// Triggered after user has selected format (via radio buttons)
 function chooseFormat(id) {
 	var module = document.getElementById(id);
 	var radios = module.getElementsByTagName("input");
@@ -32,6 +33,7 @@ function chooseFormat(id) {
 	}
 }
 
+// Triggered after the user has inputted the values
 function setValues(id) {
 	var module = document.getElementById(id);
 
@@ -60,7 +62,7 @@ function editValues(id) {
 
 function typingNormal() {
 	// When inputting values for plane format r.n = a.n, both n's must be the same
-	// Therefore, the second n is readonly and is filled by whatever is typing in the first column
+	// Therefore, the second n column is readonly and is filled by whatever is being typed in the first column
 	var x = document.getElementsByClassName("typingNormal");
 	var y = document.getElementsByClassName("settingNormal");
 

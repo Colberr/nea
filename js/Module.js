@@ -1,6 +1,5 @@
-// Stuff for MathJax
+// Code for executing MathJax in JavaScript
 let promise = Promise.resolve();
-
 function typeset(code) {
 	promise = promise.then(() => {return MathJax.typesetPromise(code());})
 		.catch((err) => console.log('Typeset failed: ' + err.message));
@@ -68,6 +67,7 @@ class Module {
 		var table = document.createElement("table");
 		table.setAttribute("class","byCol"); // byCol class means that tables are created by column instead of row
 
+		// Will display the correct input boxes for the chosen format 
 		switch (this.format) {
 			case "lineAB":
 				table = mp.singleString(table,"<i>l</i>:r=(");
@@ -130,6 +130,7 @@ class Module {
 		return this.id;
 	}
 
+	// Takes an a Latex string and parses it through MathJax, resulting in the MathJax elements
 	prepareEquation(myEq) {
 		var equation = document.createElement("span");
 		equation.setAttribute("class","equation");
@@ -141,7 +142,7 @@ class Module {
 		return equation;
 	}
 
-	// This is the actual display state, use this.prepareEquation() for the format selector 
+	// This is the actual display state, use this.prepareEquation() to display equations as part of format selection
 	displayEquation() {
 		this.module.innerHTML = "";
 		this.state = "displayEquation";

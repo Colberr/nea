@@ -4,14 +4,20 @@ class Sidebar {
 		this.modules = {};
 	}
 
-	// Hashing algorithm to make a unique key for modules
+	// Hashing algorithm to make a unique key for each module
 	createHash() {
 		var d = new Date;
 		var x = d.getTime();
 		x = x.toString(10).split('').map(Number); // Splits the time (in milliseconds) into an array of integers
 		var s = 0;
 
-		// See OneNote (NEA > Hashing Algorithm) for details
+		/*
+		This hashing algorithm takes the unicode time in milliseconds and splits it in half.
+		Then, each half is iterated through, with the value from the first half being put to the 
+		power of the value in the second half. Each of these are summed (variable: s), then the 
+		resulting number is divded by 9973 (a prime number) and converted into base-36 (alphanumeric,
+		lowercase and numbers) - ending with a 2-3 character hash. 
+		*/ 
 		for (var i=0;i<Math.floor(x.length / 2);i++) {
 			var a = x[i+1];
 			var b = x[i+1+Math.floor(x.length / 2)];
@@ -22,7 +28,7 @@ class Sidebar {
 			}
 		}
 
-		s = s % 9973; // Just a big prime number to reduce the length
+		s = s % 9973;
 		return s.toString(36);
 	}
 
@@ -71,6 +77,7 @@ class Sidebar {
 		return [lines, planes, points];
 	}
 
+	// Returns an array of possible functions that can be executed given the number of lines, planes and points there are 
 	possibleFunctions() {
 		var x = this.countLinesPlanesPoints();
 		var lines = x[0];
