@@ -105,6 +105,11 @@ class Module {
 				table = mp.singleString(table,")=");
 				table = mp.singleInput(table);
 				break;
+            case "pointCol":
+				table = mp.singleString(table,"P=(");
+				table = mp.columnVectorInput(table);
+				table = mp.singleString(table,")");
+                break;
 			default:
 				this.module.innerHTML = "";
 				return false;
@@ -144,8 +149,10 @@ class Module {
 		// Header
 		if (this.id.charAt(0) == "l") {
 			this.module.appendChild(mp.createHeader("Line Equation:"));
-		} else {
+		} else if (this.id.charAt(0) == "p") {
 			this.module.appendChild(mp.createHeader("Plane Equation:"));
+		} else {
+			this.module.appendChild(mp.createHeader("Point:"));
 		}
 
 		// Actual MathJax Equation
@@ -227,6 +234,28 @@ class PlaneModule extends Module {
 				this.displayEquation();
 
 				return graph.createPlaneFromND(n,d,this.id);
+			default:
+				return false;
+		}
+	}
+}
+
+class PointModule extends Module {
+	constructor(id) {
+		super();
+		this.id = "x" + id;
+		this.formatOptions = [["pointCol",'$$P=\\colv{x\\\\y\\\\z}$$']];
+		
+		this.showFormatSelector();
+	}
+
+	parseValues(values) {
+		switch (this.format) {
+			case "pointCol":
+				this.equation = '$$P=\\colv{' + values[0] + '\\\\' + values[1] + '\\\\' + values[2] + '}$$';
+				this.displayEquation();
+
+				return graph.createPoint(values,this.id);
 			default:
 				return false;
 		}

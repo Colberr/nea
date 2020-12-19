@@ -34,6 +34,9 @@ class Sidebar {
 		} 
 		else if (type == "plane") {
 			var module = new PlaneModule(hash);
+		} 
+		else if (type == "point") {
+			var module = new PointModule(hash);
 		} else {
 			return false;
 		}
@@ -45,11 +48,13 @@ class Sidebar {
 	deleteModule(id) {
 		document.getElementById(id).remove();
 		delete this.modules[id];
+        delete graph.content[id];
 	}
 
-	countLinesandPlanes() {
+	countLinesPlanesPoints() {
 		var lines = 0;
 		var planes = 0;
+        var points = 0;
 
 		for (let id in this.modules) {
 			if (id.charAt(0) == "l" && this.modules[id].state == "displayEquation") {
@@ -57,14 +62,17 @@ class Sidebar {
 			} 
 			else if (id.charAt(0) == "p" && this.modules[id].state == "displayEquation") {
 				planes++;
+			} 
+			else if (id.charAt(0) == "x" && this.modules[id].state == "displayEquation") {
+				points++;
 			} else {}
 		}
 
-		return [lines, planes, 0];
+		return [lines, planes, points];
 	}
 
 	possibleFunctions() {
-		var x = this.countLinesandPlanes();
+		var x = this.countLinesPlanesPoints();
 		var lines = x[0];
 		var planes = x[1];
 		var points = x[2];
@@ -78,4 +86,14 @@ class Sidebar {
 
 		return output;
 	}
+
+    showPossibleFunctions() {
+        var funcs = this.possibleFunctions();
+        var cont = document.getElementById("side-bottom");
+
+        for (var i=0; i<funcs.length;i++) {
+            var btn = mp.createButton(funcs[i],"testCreateFuncMod(" + funcs[i] + ")","");
+            cont.appendChild(btn.cloneNode(true));
+        }
+    }
 }

@@ -1,5 +1,5 @@
 const funcReqs = {
-	"lineThroughPoint":[1,0,1],
+	"relationshipLineAndPoint":[1,0,1],
 	"distanceLineToPoint":[1,0,1],
 	"relationshipTwoLines":[2,0,0],
 	"distanceLineToLine":[2,0,0],
@@ -7,7 +7,7 @@ const funcReqs = {
 	"relationshipLineAndPlane":[1,1,0],
 	"distanceLineToPlane":[1,1,0],
 	"meetingPointLineAndPlane":[1,1,0],
-	"planeThroughPoint":[0,1,1],
+	"relationshipPlaneAndPoint":[0,1,1],
 	"distancePlaneToPoint":[0,1,1]
 }
 
@@ -34,6 +34,17 @@ class Plane {
 	getDrawValues() {
 		return "test--plane";
 	}
+}
+
+// Point 
+class Point {
+    constructor(vals) {
+        this.vals = vals;
+    }
+
+    getDrawValue() {
+        return "test--point";
+    }
 }
 
 // Whole Graph
@@ -167,11 +178,19 @@ class Graph {
 		let n = this.cross(b,c);
 		return this.createPlaneFromAN(a,n,id);
 	}
+
+    createPoint(p,id) {
+        // Position vector (column)
+		if (this.notValid([p])) { return false };
+
+        this.content[id] = new Point(p);
+        return this.content[id];
+    }  
 	
 	// ------------------------
 	// Additional Line Functions
 
-	lineThroughPoint(line,p) { 
+	lineThroughPosition(line,p) { 
 		if (this.notValid([p])) { return false };
 
 		let lambdas = [];
@@ -187,10 +206,14 @@ class Graph {
 		}
 	}
 
-	distanceLineToPoint(line,p) {
+    relationshipLineAndPoint(line,point) {
+        return this.lineThroughPosition(line,point.vals);
+    }
+
+	distanceLineToPosition(line,p) {
 		if (this.notValid([p])) { return false };
 		
-		if (this.lineThroughPoint(line,p)) { return 0 };
+		if (this.lineThroughPosition(line,p)) { return 0 };
 
 		let l2 = this.subtract(line.posV,p);
 		let angle = this.dotAngle(l2,line.dirV);
@@ -198,15 +221,19 @@ class Graph {
 		return this.mag(l2) * Math.sin(this.toRad(angle));
 	}
 
+    distanceLineToPoint(line,point) {
+        return this.distanceLineToPosition(line,point.vals);
+    }
+
 	relationshipTwoLines(l1,l2) {
 		if (this.equalDir(l1.dirV,l2.dirV)) {
-			if (this.lineThroughPoint(l1,l2.posV)) {
+			if (this.lineThroughPosition(l1,l2.posV)) {
 				return "Identical"
 			} else {
 				return "Parallel"
 			}
 		} 
-		else if (this.lineThroughPoint(l1,l2.posV)) {
+		else if (this.lineThroughPosition(l1,l2.posV)) {
 			return "Cross"
 		} else {
 			return "Skew"
@@ -252,7 +279,7 @@ class Graph {
 			return 0;
 		}
 
-		return this.distancePlaneToPoint(plane,line.posV);
+		return this.distancePlaneToPosition(plane,line.posV);
 	}
 
 	meetingPointLineAndPlane(line,plane) {
@@ -270,7 +297,7 @@ class Graph {
 	// ------------------------
 	// Additional Plane Functions
 
-	planeThroughPoint(plane,p) {
+	planeThroughPosition(plane,p) {
 		if (this.notValid([p])) { return false };
 		
 		for (var i=0;i<3;i++) {
@@ -282,11 +309,19 @@ class Graph {
 		return true;
 	}
 
-	distancePlaneToPoint(plane,p) {
+    relationshipPlaneAndPoint(plane,point) {
+        return this.planeThroughPosition(plane,point.vals);
+    }
+
+	distancePlaneToPosition(plane,p) {
 		if (this.notValid([p])) { return false };
 		
-		if (this.planeThroughPoint(plane,p)) { return 0 };
+		if (this.planeThroughPosition(plane,p)) { return 0 };
 
 		return Math.abs(this.dot(plane.normal,p) - plane.constant) / this.mag(plane.normal);
 	}
+
+    distancePlaneToPoint(plane,point) {
+        return this.distancePlaneToPosition(plane,point.vals)
+    }
 }
