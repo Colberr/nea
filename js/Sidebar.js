@@ -32,7 +32,7 @@ class Sidebar {
 		return s.toString(36);
 	}
 
-	addNewModule(type) {
+	addNewModule(type, extra) {
 		var hash = this.createHash();
 
 		if (type == "line") {
@@ -43,6 +43,9 @@ class Sidebar {
 		} 
 		else if (type == "point") {
 			var module = new PointModule(hash);
+		}
+		else if (type == "calc") {
+			var module = new CalcModule(hash, extra);
 		} else {
 			return false;
 		}
@@ -57,24 +60,40 @@ class Sidebar {
         delete graph.content[id];
 	}
 
-	countLinesPlanesPoints() {
-		var lines = 0;
-		var planes = 0;
-        var points = 0;
+	// Creates an array of "valid" modules (ie; ones that are ready to be used in calculations)
+	getValidModuleIds() {
+		var lines = [];
+		var planes = [];
+        var points = [];
 
 		for (let id in this.modules) {
 			if (id.charAt(0) == "l" && this.modules[id].state == "displayEquation") {
-				lines++;
+				lines.push(this.modules[id].id);
 			} 
 			else if (id.charAt(0) == "p" && this.modules[id].state == "displayEquation") {
-				planes++;
+				planes.push(this.modules[id].id);
 			} 
 			else if (id.charAt(0) == "x" && this.modules[id].state == "displayEquation") {
-				points++;
+				points.push(this.modules[id].id);
 			} else {}
 		}
 
 		return [lines, planes, points];
+	}
+
+	countLinesPlanesPoints() {
+		return this.getValidModuleIds().map(x => x.length);
+
+		/* Saving time by using higher-order function
+		
+		var validIds = this.getValidModuleIds();
+		var counts = [];
+		counts.push(validIds[0].length);
+		counts.push(validIds[1].length);
+		counts.push(validIds[2].length);
+
+		return counts;
+		*/
 	}
 
 	// Returns an array of possible functions that can be executed given the number of lines, planes and points there are 

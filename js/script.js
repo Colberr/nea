@@ -5,7 +5,7 @@ var graph = new Graph;
 // --------------------------------------------------
 // Object (Module) Functions
 
-function createNewModule(type) { sidebar.addNewModule(type) };
+function createNewModule(type,extra="") { sidebar.addNewModule(type,extra) };
 
 function clickFormat(id) {
 	document.getElementsByClassName(id)[0].checked = true;
@@ -56,8 +56,12 @@ function changeFormat(id) {
 }
 
 function editValues(id) {
-	var currentFormat = sidebar.modules[id].format;
-	sidebar.modules[id].showValueInput(currentFormat);
+	if (id.startswith("c")) {
+		sidebar.modules[id].refresh();
+	} else {
+		var currentFormat = sidebar.modules[id].format;
+		sidebar.modules[id].showValueInput(currentFormat);
+	}
 }
 
 function typingNormal() {

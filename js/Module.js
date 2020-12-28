@@ -17,7 +17,7 @@ class Module {
 		this.module.setAttribute("class","module");
 	}
 
-	showFormatSelector() {
+	showFormatSelector(headertext="Select Format:") {
 		this.state = "formatSelect";
 		this.format = "#";
 		this.module.setAttribute("id",this.id);
@@ -25,7 +25,7 @@ class Module {
 
 		// Header
 		this.module.appendChild(
-			mp.createHeader("Select Format:")
+			mp.createHeader(headertext)
 		);
 
 		// Loops through each relevant radio option (as defined at start of function)
@@ -261,4 +261,97 @@ class PointModule extends Module {
 				return false;
 		}
 	}
+}
+
+class CalcModule extends Module {
+	constructor(id,calculation) {
+		super();
+		this.calculation = calculation;
+		this.operandModules = [];
+		this.id = "c" + id;
+
+		this.refresh();
+	}
+
+	refresh() {
+		this.prepareAllOptions();
+		this.selectionIndex = 0;
+		this.iterateFormatSelection();
+	}
+
+	prepareAllOptions() {
+		const modules = sidebar.getValidModuleIds();
+		var reqs = funcReqs[this.calculation]; // Will give an array of number of lines, planes and points needed respectively
+		var options = [];
+
+		// i: iterates through each element of reqs, j: runs the push code "reqs[i]" times
+		for (var i=0;i<reqs.length;i++) {
+			for (var j=0;j<reqs[i];j++) {
+				options.push(modules[i]);
+			}
+		}
+
+		this.allOptions = options;
+		return this.allOptions;
+	}
+
+	formatFormatOptions(arr) {
+		var fo = [];
+		for (var j=0;j<arr.length;j++) {
+			var temp = [arr[j]];
+			temp.push(sidebar.modules[arr[j]].equation);
+			fo.push(temp)
+		}
+
+		return fo;
+	}
+
+	iterateFormatSelection() {
+		this.formatOptions = this.formatFormatOptions(this.allOptions[this.selectionIndex]);
+		this.showFormatSelector("fix this title");
+	}
+
+	// Using polymorphism to edit parent object function definition (which is called by a button)
+	showValueInput(format) {
+		this.operandModules.push(format);
+		this.selectionIndex += 1;
+
+		if (this.selectionIndex < this.allOptions.length) {
+			this.iterateFormatSelection();
+		} else {
+			this.calculateDisplayResult();
+		}
+	}
+
+	calculateDisplayResult() {
+		// Calcutions through Graph.js
+		var answer = graph[this.calculation](
+			graph.content[this.operandModules[0]],
+			graph.content[this.operandModules[1]]
+		);
+		console.log(answer);
+
+		this.module.innerHTML = "";
+		this.state = "displayResult";
+		
+		// Header
+		this.module.appendChild(mp.createHeader(this.calculation));
+
+		// Actual MathJax Equation
+		var div = this.prepareEquation(sidebar.modules[this.operandModules[0]].equation);
+		this.module.appendChild(div);
+		var div2 = this.prepareEquation(sidebar.modules[this.operandModules[1]].equation);
+		this.module.appendChild(div2);
+		var div3 = this.prepareEquation("$$Result: " + answer.toString() + "$$");
+		this.module.appendChild(div3);
+		
+		// Buttons
+		this.module.appendChild(
+			mp.createButton("Reset","editValues(this.id)",this.id)
+		);
+		this.module.appendChild(mp.createDeleteButton(this.id));
+
+		return answer;
+	}
+	
 }

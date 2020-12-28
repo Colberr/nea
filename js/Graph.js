@@ -199,7 +199,7 @@ class Graph {
 			lambdas.push((p[i] - line.posV[i]) / line.dirV[i]);
 		}
 
-		if (lambdas[0] == lambdas[1] == lambdas[2]) {
+		if (lambdas[0] == lambdas[1] && lambdas[0] == lambdas[2]) {
 			return true;
 		} else {
 			return false;

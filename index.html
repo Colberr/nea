@@ -26,6 +26,8 @@
 				<button onclick="createNewModule('line')">Create Line</button>
 				<button onclick="createNewModule('plane')">Create Plane</button>
 				<button onclick="createNewModule('point')">Create Point</button>
+
+				<button style="background: blue" onclick="createNewModule('calc','distanceLineToPoint')">[Temp] Calc</button>
 			</div>
 			<!-- Lines & Planes List -->
 			<div id="side-middle">
@@ -34,6 +36,7 @@
 			<!-- Operations -->
 			<div id="side-bottom">
 				<div class="collapse-arrow" onclick="collapseSideBottom()"></div>
+				<div id="calculation-buttons"></div>
 			</div>
 		</div>
 		<main></main> <!-- Graph will go here -->
