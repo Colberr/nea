@@ -7,15 +7,15 @@
 		
 		<link rel="stylesheet" href="css/styles.css">
 
-		<script src="js/ModuleParts.js"></script>
-		<script src="js/Sidebar.js"></script>
-		<script src="js/Module.js"></script>
-		<script src="js/Graph.js"></script>
-		<script src="js/script.js"></script>
-
-		<!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
 		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r124/three.min.js"></script>
+
+		<script src="js/ModuleParts.js"></script>
+		<script src="js/VectorFuncs.js"></script>
+		<script src="js/Sidebar.js"></script>
+		<script src="js/Module.js"></script>
+		<script src="js/Scene.js" defer></script>
+		<script src="js/script.js"></script>
 
 		<!-- MathJax shorthand definition for column vector -->
 		<div style="display: none">$$\newcommand\colv[1]{\begin{pmatrix}#1\end{pmatrix}}$$</div>
@@ -40,6 +40,6 @@
 				<div id="calculation-buttons"></div>
 			</div>
 		</div>
-		<main></main> <!-- Graph will go here -->
+		<main id="graphCont"></main>
 	</body>
 </html>

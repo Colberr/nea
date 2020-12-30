@@ -71,8 +71,8 @@ class Graph {
 	
 	// ------------------------
 	// Common Functions
-	toRad(x) { return x * (Math.PI / 180); }
-	toDeg(x) { return x * (180 / Math.PI); }
+	toRad(x) { return x * (Math.PI / 180) };
+	toDeg(x) { return x * (180 / Math.PI) };
 
 	scale(t,a) {
 		// Scale multiplication (ie; just multiplying by same number)
