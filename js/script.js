@@ -56,9 +56,10 @@ function changeFormat(id) {
 }
 
 function editValues(id) {
-	if (id.startswith("c")) {
+	if (id.startsWith("c")) {
 		sidebar.modules[id].refresh();
 	} else {
+		graph.content[id].resetValues();
 		var currentFormat = sidebar.modules[id].format;
 		sidebar.modules[id].showValueInput(currentFormat);
 	}

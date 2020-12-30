@@ -329,7 +329,6 @@ class CalcModule extends Module {
 			graph.content[this.operandModules[0]],
 			graph.content[this.operandModules[1]]
 		);
-		console.log(answer);
 
 		this.module.innerHTML = "";
 		this.state = "displayResult";

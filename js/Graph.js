@@ -18,6 +18,11 @@ class Line {
 		this.dirV = dirV;
 	}
 
+	resetValues() {
+		this.posV = null;
+		this.dirV = null;
+	}
+
 	getDrawValues() {
 		return "test--line";
 	}
@@ -25,10 +30,16 @@ class Line {
 
 // Plane
 class Plane {
-	constructor(normal, constant, posV=false) {
+	constructor(normal, constant, posV=null) {
 		this.normal = normal;
 		this.constant = constant;
 		this.posV = posV;
+	}
+
+	resetValues() {
+		this.normal = null;
+		this.constant = null;
+		this.posV = null;
 	}
 	
 	getDrawValues() {
@@ -41,6 +52,10 @@ class Point {
     constructor(vals) {
         this.vals = vals;
     }
+
+	resetValues() {
+		this.vals = null;
+	}
 
     getDrawValue() {
         return "test--point";
