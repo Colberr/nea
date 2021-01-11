@@ -98,3 +98,10 @@ function collapseSideBottom() {
 		arrow.style.transform = "rotate(45deg)";
 	}
 }
+
+function openImportExport() {
+	document.getElementById("importCont").style.display = "inherit";
+}
+function closeImportExport() {
+	document.getElementById("importCont").style.display = "none";
+}

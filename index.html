@@ -28,7 +28,7 @@
 				<button onclick="createNewModule('plane')">Create Plane</button>
 				<button onclick="createNewModule('point')">Create Point</button>
 				
-				
+				<button onclick="openImportExport()">Import/ Export</button>
 			</div>
 			<!-- Lines & Planes List -->
 			<div id="side-middle">
@@ -41,5 +41,22 @@
 			</div>
 		</div>
 		<main id="graphCont"></main>
+		<div id="importCont">
+			<div id="importWindow">
+				<div id="importX" onclick="closeImportExport()">x</div>
+
+				<h2>Import</h2>
+				<textarea rows="5"></textarea>
+				<br>
+				<button>Import equations</button>
+				<span id="importError"></span>
+
+				<h2>Export</h2>
+				<textarea rows="5" id="exportText" readonly>Testing testing...</textarea>
+				<br>
+				<button onclick="document.getElementById('exportText').select();document.execCommand('copy');">Copy equations to clipboard</button>
+				<span>Copy the text above and save it somewhere</span>
+			</div>
+		</div>
 	</body>
 </html>
