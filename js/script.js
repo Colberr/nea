@@ -44,7 +44,8 @@ function setValues(id) {
 		values.push(parseInt(inputs[i].value));
 	} 
 
-	return sidebar.modules[id].parseValues(values);
+	sidebar.modules[id].parseValues(values);
+	sidebar.showPossibleFunctions(); // Refreshes the buttons at bottom
 }
 
 function deleteModule(id) {
@@ -63,6 +64,7 @@ function editValues(id) {
 		var currentFormat = sidebar.modules[id].format;
 		sidebar.modules[id].showValueInput(currentFormat);
 	}
+	sidebar.showPossibleFunctions(); // Refreshes the buttons at bottom
 }
 
 function typingNormal() {

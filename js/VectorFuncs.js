@@ -222,7 +222,11 @@ class Graph {
 	}
 
     relationshipLineAndPoint(line,point) {
-        return this.lineThroughPosition(line,point.vals);
+        if (this.lineThroughPosition(line,point.vals)) {
+			return "Intersect"
+		} else {
+			return "Do not meet"
+		}
     }
 
 	distanceLineToPosition(line,p) {

@@ -83,7 +83,7 @@ drawLoop();
 
 // ------------------------------------------------------------------
 // Camera movement
-const movementSpeed = 0.005;
+const movementSpeed = 0.01;
 const rotationSpeed = 0.01;
 
 document.addEventListener('keydown', function(event) {
@@ -167,3 +167,68 @@ document.addEventListener('keyup', function(event) {
 			return dgamma;
 	}
 });
+
+
+
+// Testing testing
+camera.position.x = 3;
+camera.position.y = 2;
+camera.position.z = 5;
+
+
+
+var cubeGeometry = new THREE.BoxGeometry(15, 0.01, 15);
+var cubeMaterial = new THREE.MeshBasicMaterial({
+	color: 0x999999
+});
+cubeMaterial.transparent = true;
+cubeMaterial.opacity = 0.8;
+var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
+
+// Code copied from my own p5js thing (from Feb 2020)
+// r = a + λb 
+function eqToPoints(a,b) {
+  
+	t1 = [50/b[0], 50/b[1], 50/b[2]];
+	t1Min = Math.min(...t1);
+	
+	endPosi = [
+	  t1Min * b[0] + a[0], 
+	  t1Min * b[1] + a[1], 
+	  t1Min * b[2] + a[2]
+	];
+	
+	endNega = [
+	  -1 * t1Min * b[0] + a[0], 
+	  -1 * t1Min * b[1] + a[1], 
+	  -1 * t1Min * b[2] + a[2]
+	];
+	
+	
+	return([endPosi,endNega]);
+}
+
+var lines = [];
+function makeLine(a,b) {
+	var r = eqToPoints(a,b);
+	const points = [
+		new THREE.Vector3(r[0][0],r[0][1],r[0][2]), 
+		new THREE.Vector3(r[1][0],r[1][1],r[1][2])
+	];
+	const lineMaterial = new THREE.LineBasicMaterial( {color: Math.random() * 0xff0000} );
+
+	lines.push(
+		new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), lineMaterial)
+	);
+	scene.add(lines[lines.length-1]);
+}
+
+makeLine(
+	[0,0,0],
+	[-1,1.5,2]
+);
+makeLine(
+	[1,-3,-2],
+	[2,5,1]
+);

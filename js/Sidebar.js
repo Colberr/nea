@@ -114,12 +114,18 @@ class Sidebar {
 	}
 
     showPossibleFunctions() {
-        var funcs = this.possibleFunctions();
-        var cont = document.getElementById("side-bottom");
+		var funcs = this.possibleFunctions();
+		// var cont = document.createElement("div");
+		var cont = document.getElementById("calc-btns-cont");
+		cont.innerHTML = "";
+		// cont.classList.add("calculation-buttons");
 
         for (var i=0; i<funcs.length;i++) {
-            var btn = mp.createButton(funcs[i],"testCreateFuncMod(" + funcs[i] + ")","");
-            cont.appendChild(btn.cloneNode(true));
-        }
+			var btn = mp.createButton(funcs[i],"createNewModule('calc','" + funcs[i] + "')","");
+			cont.appendChild(btn);	
+		}
+		
+		document.getElementById("side-bottom").appendChild(cont);
+		return cont;
     }
 }
