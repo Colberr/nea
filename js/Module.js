@@ -171,11 +171,7 @@ class Module {
 
 	importEquation(data) {
 		this.format = data["format"];
-		var values = [];
-		for (var i=0;i<data["values"].length;i++) {
-			values = values.concat(data["values"][i]);
-		}
-		this.parseValues(values);
+		this.parseValues(data["values"]);
 	}
 }
 
