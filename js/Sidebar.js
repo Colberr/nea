@@ -33,19 +33,25 @@ class Sidebar {
 	}
 
 	addNewModule(type, extra) {
-		var hash = this.createHash();
-
+		try {
+			var id = extra["id"];
+			id = id.substring(1);
+		}
+		catch(err) {
+			var id = this.createHash();
+		}
+		
 		if (type == "line") {
-			var module = new LineModule(hash);
+			var module = new LineModule(id, extra);
 		} 
 		else if (type == "plane") {
-			var module = new PlaneModule(hash);
+			var module = new PlaneModule(id, extra);
 		} 
 		else if (type == "point") {
-			var module = new PointModule(hash);
+			var module = new PointModule(id, extra);
 		}
 		else if (type == "calc") {
-			var module = new CalcModule(hash, extra);
+			var module = new CalcModule(id, extra);
 		} else {
 			return false;
 		}

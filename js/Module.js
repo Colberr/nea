@@ -168,15 +168,28 @@ class Module {
 
 		return this.id;
 	}
+
+	importEquation(data) {
+		this.format = data["format"];
+		var values = [];
+		for (var i=0;i<data["values"].length;i++) {
+			values = values.concat(data["values"][i]);
+		}
+		this.parseValues(values);
+	}
 }
 
 class LineModule extends Module {
-	constructor(id) {
+	constructor(id,imported=null) {
 		super();
 		this.id = "l" + id;
 		this.formatOptions = [["lineAB",'$$l:r=a+\\lambda b$$']];
 		
-		this.showFormatSelector();
+		if (imported == null) {
+			this.showFormatSelector();
+		} else {
+			this.importEquation(imported);
+		}
 	}
 
 	parseValues(values) {
@@ -196,7 +209,7 @@ class LineModule extends Module {
 }
 
 class PlaneModule extends Module {
-	constructor(id) {
+	constructor(id,imported=null) {
 		super();
 		this.id = "p" + id;
 		this.formatOptions = [
@@ -205,7 +218,11 @@ class PlaneModule extends Module {
 			["planeND",'$$\\Pi :r.n=d$$']
 		];
 		
-		this.showFormatSelector();
+		if (imported == null) {
+			this.showFormatSelector();
+		} else {
+			this.importEquation(imported);
+		}
 	}
 
 	parseValues(values) {
@@ -242,12 +259,16 @@ class PlaneModule extends Module {
 }
 
 class PointModule extends Module {
-	constructor(id) {
+	constructor(id,imported=null) {
 		super();
 		this.id = "x" + id;
 		this.formatOptions = [["pointCol",'$$P=\\colv{x\\\\y\\\\z}$$']];
 		
-		this.showFormatSelector();
+		if (imported == null) {
+			this.showFormatSelector();
+		} else {
+			this.importEquation(imported);
+		}
 	}
 
 	parseValues(values) {

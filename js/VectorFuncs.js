@@ -271,7 +271,7 @@ class Graph {
 	meetingPointTwoLines(l1,l2) {
 		if (this.relationshipTwoLines(l1,l2) != "Cross") { return false };
 
-		var lambda = (l2.posV[1] - l1.posV[1] + ((l2.dirV[1] * (l1.posV[0] - l2.posV[0])) / l2.dirV[0])) /  (l1.dirV[1] - (l1.posV[0] * l2.dirV[1] / l2.diV[0]));
+		var lambda = (l2.posV[1] - l1.posV[1] + ((l2.dirV[1] * (l1.posV[0] - l2.posV[0])) / l2.dirV[0])) /  (l1.dirV[1] - (l1.posV[0] * l2.dirV[1] / l2.dirV[0]));
 		var mu = (l1.posV[0] - l2.posV[0] (l1.dirV[0] * lambda)) / l2.dirV[0];
 		
 		if (l1.posV[2] + (l1.dirV[2] * lambda) == l2.posV + (l2.dirV[2] * mu)) {

@@ -78,6 +78,39 @@ function typingNormal() {
 	}
 }
 
+function importEquations() {
+	document.getElementById("importError").innerHTML = "";
+
+	try {
+		var jsonData = JSON.parse(document.getElementById("importText").value);
+	}
+	catch(err) {
+		document.getElementById("importError").innerHTML = "Input not valid - only input things that were previously exported, be sure to include [ ]";
+		return false;
+	}
+
+	for (var i=0;i<jsonData.length;i++) {
+		var e = jsonData[i];
+		if (e.id.charAt(0) == e.format.charAt(0) || (e.id.startsWith("x") && e.format == "pointCol")) {
+			switch (e.id.charAt(0)) {
+				case "l":
+					sidebar.addNewModule("line",e);
+					break;
+				case "p":
+					sidebar.addNewModule("plane",e);
+					break;
+				case "x":
+					sidebar.addNewModule("point",e);
+					break;
+				default:
+					return false;
+			}
+		} else {
+			document.getElementById("importError").innerHTML = "Input not valid - only input things that were previously exported, be sure to include [ ]";
+		}
+	}
+	sidebar.showPossibleFunctions(); // Refreshes the buttons at bottom
+}
 // --------------------------------------------------
 // HTML/ CSS Functions
 function collapseSideBottom() {
