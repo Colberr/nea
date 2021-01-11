@@ -102,6 +102,7 @@ table tr td.byCol {
 /* Import Export Window */
 #importCont {
 	background: rgba(0,0,0,0.6);
+	display: none;
 	height: 100%;
 	position: fixed;
 	width: 100%;
