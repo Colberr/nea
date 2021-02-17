@@ -49,16 +49,14 @@
 				<!-- 
 					[{"id":"l4sn","format":"lineAB","values":[1,1,1,2,2,2]},
 					{"id":"p35g","format":"planeABC","values":[3,3,3,4,4,4,5,5,5]}]
-
-				ALSO, check that all IDs are different (if not just increment one) -->
-				<textarea rows="5" id="importText">[{"id":"lkt6","format":"lineAB","values":[1,1,1,2,2,2]},
-					{"id":"p35g","format":"planeABC","values":[3,3,3,4,4,4,5,5,5]}]</textarea>
+				-->
+				<textarea rows="5" id="importText">[{"id":"lkt6","format":"lineAB","values":[1,1,1,2,2,2]},{"id":"p35g","format":"planeABC","values":[3,3,3,4,4,4,5,5,5]},{"id":"x5h3","format":"pointCol","values":[-2,-2,-2]}]</textarea>
 				<br>
 				<button onclick="importEquations()">Import equations</button>
 				<span id="importError"></span>
 
 				<h2>Export</h2>
-				<textarea rows="5" id="exportText" readonly>Testing testing...</textarea>
+				<textarea rows="5" id="exportText" readonly></textarea>
 				<br>
 				<button onclick="document.getElementById('exportText').select();document.execCommand('copy');">Copy equations to clipboard</button>
 				<span>Copy the text above and save it somewhere</span>

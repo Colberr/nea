@@ -138,4 +138,23 @@ class Sidebar {
 		document.getElementById("side-bottom").appendChild(cont);
 		return cont;
     }
+
+	createExportJSON() {
+		var jsonString = '[';
+
+		for (var id in this.modules) {
+			var format = this.modules[id]["format"];
+			if (this.modules[id].state == "displayEquation") {
+				var values = this.modules[id]["values"];
+				
+				jsonString = jsonString + '{"id":"' + id + '","format":"' + format + '","values":[' + values.toString() + ']},';
+			} else {
+				continue;
+			}
+		}
+
+		if (jsonString.substr(-1) == ',') jsonString = jsonString.slice(0, -1);	// Removing last comma
+		jsonString += ']';
+		return jsonString;
+	}
 }

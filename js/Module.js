@@ -190,6 +190,8 @@ class LineModule extends Module {
 	}
 
 	parseValues(values) {
+		this.values = values;
+		
 		switch (this.format) {
 			case "lineAB":
 				var posV = values.slice(0,3);
@@ -224,6 +226,8 @@ class PlaneModule extends Module {
 	}
 
 	parseValues(values) {
+		this.values = values;
+
 		switch (this.format) {
 			case "planeABC":
 				var a = values.slice(0,3);
@@ -235,6 +239,7 @@ class PlaneModule extends Module {
 
 				return graph.createPlaneFromABC(a,b,c,this.id);
 			case "planeAN":
+				this.values = values.slice(0,6);
 				var n = values.slice(0,3);
 				var a = values.slice(3,6);
 
@@ -271,6 +276,8 @@ class PointModule extends Module {
 	}
 
 	parseValues(values) {
+		this.values = values;
+
 		switch (this.format) {
 			case "pointCol":
 				this.equation = '$$P=\\colv{' + values[0] + '\\\\' + values[1] + '\\\\' + values[2] + '}$$';

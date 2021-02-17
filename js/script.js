@@ -111,6 +111,9 @@ function importEquations() {
 		}
 	}
 	sidebar.showPossibleFunctions(); // Refreshes the buttons at bottom
+
+	closeImportExport();
+	document.getElementById("importText").value = "";
 }
 // --------------------------------------------------
 // HTML/ CSS Functions
@@ -143,8 +146,10 @@ function collapseSideBottom() {
 }
 
 function openImportExport() {
+	document.getElementById("exportText").value = sidebar.createExportJSON();
 	document.getElementById("importCont").style.display = "inherit";
 }
 function closeImportExport() {
 	document.getElementById("importCont").style.display = "none";
+	document.getElementById("exportText").value = sidebar.createExportJSON();
 }
