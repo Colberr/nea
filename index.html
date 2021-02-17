@@ -46,7 +46,13 @@
 				<div id="importX" onclick="closeImportExport()">x</div>
 
 				<h2>Import</h2>
-				<textarea rows="5" id="importText"></textarea>
+				<!-- 
+					[{"id":"l4sn","format":"lineAB","values":[1,1,1,2,2,2]},
+					{"id":"p35g","format":"planeABC","values":[3,3,3,4,4,4,5,5,5]}]
+
+				ALSO, check that all IDs are different (if not just increment one) -->
+				<textarea rows="5" id="importText">[{"id":"lkt6","format":"lineAB","values":[1,1,1,2,2,2]},
+					{"id":"p35g","format":"planeABC","values":[3,3,3,4,4,4,5,5,5]}]</textarea>
 				<br>
 				<button onclick="importEquations()">Import equations</button>
 				<span id="importError"></span>

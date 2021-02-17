@@ -176,14 +176,15 @@ class Module {
 }
 
 class LineModule extends Module {
-	constructor(id,imported=null) {
+	constructor(id,imported="") {
 		super();
-		this.id = "l" + id;
 		this.formatOptions = [["lineAB",'$$l:r=a+\\lambda b$$']];
 		
-		if (imported == null) {
+		if (imported == "") {
+			this.id = "l" + id;
 			this.showFormatSelector();
 		} else {
+			this.id = id;
 			this.importEquation(imported);
 		}
 	}
@@ -205,18 +206,19 @@ class LineModule extends Module {
 }
 
 class PlaneModule extends Module {
-	constructor(id,imported=null) {
+	constructor(id,imported="") {
 		super();
-		this.id = "p" + id;
 		this.formatOptions = [
 			["planeABC",'$$\\Pi :r=a+\\lambda b+\\mu c$$'],
 			["planeAN",'$$\\Pi :r.n=a.n$$'],
 			["planeND",'$$\\Pi :r.n=d$$']
 		];
 		
-		if (imported == null) {
+		if (imported == "") {
+			this.id = "p" + id;
 			this.showFormatSelector();
 		} else {
+			this.id = id;
 			this.importEquation(imported);
 		}
 	}
@@ -255,14 +257,15 @@ class PlaneModule extends Module {
 }
 
 class PointModule extends Module {
-	constructor(id,imported=null) {
+	constructor(id,imported="") {
 		super();
-		this.id = "x" + id;
 		this.formatOptions = [["pointCol",'$$P=\\colv{x\\\\y\\\\z}$$']];
 		
-		if (imported == null) {
+		if (imported == "") {
+			this.id = "x" + id;
 			this.showFormatSelector();
 		} else {
+			this.id = id;
 			this.importEquation(imported);
 		}
 	}

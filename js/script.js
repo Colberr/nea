@@ -49,7 +49,8 @@ function setValues(id) {
 }
 
 function deleteModule(id) {
-	return sidebar.deleteModule(id);
+	sidebar.deleteModule(id);
+	sidebar.showPossibleFunctions(); // Refreshes the buttons at bottom
 }
 
 function changeFormat(id) {
@@ -118,17 +119,26 @@ function collapseSideBottom() {
 	var sm = document.getElementById("side-middle");
 	var sb = document.getElementById("side-bottom");
 	var currentHeight = sb.offsetHeight;
+	var btns = document.getElementById("calc-btns-cont").children;
 
 	if (currentHeight >= 60) {
 		// Currently up
 		sm.style.height = "calc(100% - 80px)";
 		sb.style.height = "50px";
 		arrow.style.transform = "rotate(225deg)";
+		
+		for (var i=0; i<btns.length; i++) {
+			btns[i].disabled = true;
+		}
 	} else {
 		// Currently down
 		sm.style.height = "calc(75% - 30px)";
 		sb.style.height = "25%";
 		arrow.style.transform = "rotate(45deg)";
+
+		for (var i=0; i<btns.length; i++) {
+			btns[i].disabled = false;
+		}
 	}
 }
 

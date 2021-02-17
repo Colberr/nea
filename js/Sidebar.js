@@ -33,14 +33,18 @@ class Sidebar {
 	}
 
 	addNewModule(type, extra) {
-		try {
-			var id = extra["id"];
-			id = id.substring(1);
-		}
-		catch(err) {
+		if (extra == "") {
 			var id = this.createHash();
+		} else {
+			var id = extra["id"];
 		}
 		
+		while (id in this.modules) {		// Increments ID if already being used
+			var idDec = parseInt(id, 36);
+			idDec++;
+			id = idDec.toString(36);
+		}
+
 		if (type == "line") {
 			var module = new LineModule(id, extra);
 		} 
