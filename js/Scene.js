@@ -10,7 +10,7 @@ cont.appendChild(renderer.domElement);
 
 
 // Creating axes
-const axisLength = 200;
+const axisLength = 80;
 
 function drawAxes() {
 	var limits = [
@@ -26,6 +26,17 @@ function drawAxes() {
 	}
 }
 drawAxes();
+
+// z=0 plane
+var basePlaneGeometry = new THREE.PlaneGeometry(50, 50);
+var basePlaneMaterial = new THREE.MeshBasicMaterial({
+	color: 0x999999
+});
+basePlaneMaterial.transparent = true;
+basePlaneMaterial.opacity = 0.75;
+var basePlane = new THREE.Mesh(basePlaneGeometry, basePlaneMaterial);
+basePlane.rotateX(- Math.PI / 2);
+scene.add(basePlane);
 
 
 // Updates graphics
@@ -143,19 +154,11 @@ document.addEventListener('keyup', function(event) {
 });
 
 
+// Initial camera position
+camera.position.x = 6;
+camera.position.y = 4;
+camera.position.z = 8;
 
-// Testing testing
-camera.position.x = 3;
-camera.position.y = 2;
-camera.position.z = 5;
 
+// ------------------------------------------------------------------
 
-// z=0 plane
-var cubeGeometry = new THREE.BoxGeometry(15, 0.01, 15);
-var cubeMaterial = new THREE.MeshBasicMaterial({
-	color: 0x999999
-});
-cubeMaterial.transparent = true;
-cubeMaterial.opacity = 0.8;
-var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-scene.add(cube);

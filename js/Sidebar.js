@@ -67,6 +67,7 @@ class Sidebar {
 	deleteModule(id) {
 		document.getElementById(id).remove();
 		delete this.modules[id];
+		graph.content[id].resetValues();
         delete graph.content[id];
 	}
 

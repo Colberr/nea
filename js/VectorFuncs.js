@@ -23,6 +23,7 @@ class Line {
 	resetValues() {
 		this.posV = null;
 		this.dirV = null;
+		this.deleteShape();
 	}
 
 	drawShape() {
@@ -42,6 +43,10 @@ class Line {
 
 		return scene.add(this.shapeObj);
 	}
+
+	deleteShape() {
+		scene.remove(this.shapeObj);
+	}
 }
 
 // Plane
@@ -50,16 +55,47 @@ class Plane {
 		this.normal = normal;
 		this.constant = constant;
 		this.posV = posV;
+
+		this.drawShape();
 	}
 
 	resetValues() {
 		this.normal = null;
 		this.constant = null;
 		this.posV = null;
+		this.deleteShape();
 	}
 	
-	getDrawValues() {
-		return "test--plane";
+	drawShape() {
+		var planeGeometry = new THREE.PlaneGeometry( axisLength / 4, axisLength / 4 );
+		var planeMaterial = new THREE.MeshBasicMaterial( {color: Math.random() * 0xffffff, side: THREE.DoubleSide} );
+		planeMaterial.transparent = true;
+		planeMaterial.opacity = 0.8;
+		this.shapeObj = new THREE.Mesh( planeGeometry, planeMaterial );
+
+		// Position
+		if (this.posV != null) {
+			this.shapeObj.position.x = this.posV[0];
+			this.shapeObj.position.y = this.posV[1];
+			this.shapeObj.position.z = this.posV[2];
+		} else {
+			var lambda = this.constant / graph.dot(this.normal,this.normal);
+			this.shapeObj.position.x = lambda * this.normal[0];
+			this.shapeObj.position.y = lambda * this.normal[1];
+			this.shapeObj.position.z = lambda * this.normal[2];
+		}
+
+		// Angle
+		var unitNormal = graph.unitV(this.normal);
+		this.shapeObj.rotateX(Math.acos(unitNormal[0]));
+		this.shapeObj.rotateY(Math.acos(unitNormal[1]));
+		this.shapeObj.rotateZ(Math.acos(unitNormal[2]));
+
+		return scene.add(this.shapeObj);
+	}
+
+	deleteShape() {
+		scene.remove(this.shapeObj);
 	}
 }
 
