@@ -16,6 +16,8 @@ class Line {
 	constructor(posV,dirV) {
 		this.posV = posV;
 		this.dirV = dirV;
+
+		this.drawShape();
 	}
 
 	resetValues() {
@@ -23,8 +25,22 @@ class Line {
 		this.dirV = null;
 	}
 
-	getDrawValues() {
-		return "test--line";
+	drawShape() {
+		var drawPoints = [];
+		for (var sign=-1; sign<=1; sign+=2) {
+			var P = [sign * axisLength, sign * axisLength, sign * axisLength];
+			var lambda = ( graph.dot(this.dirV, graph.subtract(P,this.posV)) ) / ( graph.dot(this.dirV, this.dirV) );
+			var Q = graph.add(this.posV, graph.scale(lambda,this.dirV));
+
+			drawPoints.push(
+				new THREE.Vector3(Q[0], Q[1], Q[2])
+			);
+		}
+	
+		const lineMaterial = new THREE.LineBasicMaterial({color: 0xff0000});
+		this.shapeObj = new THREE.Line(new THREE.BufferGeometry().setFromPoints(drawPoints), lineMaterial);
+
+		return scene.add(this.shapeObj);
 	}
 }
 
