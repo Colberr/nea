@@ -38,7 +38,7 @@ class Line {
 			);
 		}
 	
-		const lineMaterial = new THREE.LineBasicMaterial({color: 0xff0000});
+		const lineMaterial = new THREE.LineBasicMaterial( {color: Math.random() * 0xffffff} );
 		this.shapeObj = new THREE.Line(new THREE.BufferGeometry().setFromPoints(drawPoints), lineMaterial);
 
 		return scene.add(this.shapeObj);
@@ -56,7 +56,7 @@ class Plane {
 		this.constant = constant;
 		this.posV = posV;
 
-		this.drawShape();
+		// this.drawShape(); Planes not currently working
 	}
 
 	resetValues() {
@@ -89,7 +89,7 @@ class Plane {
 		var unitNormal = graph.unitV(this.normal);
 		this.shapeObj.rotateX(Math.acos(unitNormal[0]));
 		this.shapeObj.rotateY(Math.acos(unitNormal[1]));
-		this.shapeObj.rotateZ(Math.acos(unitNormal[2]));
+		this.shapeObj.rotateZ(Math.acos(unitNormal[2])); // Fix this
 
 		return scene.add(this.shapeObj);
 	}
@@ -103,14 +103,24 @@ class Plane {
 class Point {
     constructor(vals) {
         this.vals = vals;
+
+		this.drawShape();
     }
 
 	resetValues() {
 		this.vals = null;
 	}
 
-    getDrawValue() {
-        return "test--point";
+    drawShape() {
+		var geometry = new THREE.SphereGeometry( 0.05 );
+		var material = new THREE.MeshBasicMaterial( {color: Math.random() * 0xffffff} );
+		this.shapeObj = new THREE.Mesh( geometry, material );
+
+		this.shapeObj.position.x = this.vals[0];
+		this.shapeObj.position.y = this.vals[1];
+		this.shapeObj.position.z = this.vals[2];
+
+		return scene.add(this.shapeObj);
     }
 }
 

@@ -155,9 +155,9 @@ document.addEventListener('keyup', function(event) {
 
 
 // Initial camera position
-camera.position.x = 6;
-camera.position.y = 4;
-camera.position.z = 8;
+camera.position.x = 3;
+camera.position.y = 3;
+camera.position.z = 5;
 
 
 // ------------------------------------------------------------------

@@ -170,6 +170,7 @@ class Module {
 	}
 
 	importEquation(data) {
+		this.module.setAttribute("id",this.id);
 		this.format = data["format"];
 		this.parseValues(data["values"]);
 	}
