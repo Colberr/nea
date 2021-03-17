@@ -27,7 +27,7 @@ class Line {
 	}
 
 	drawShape() {
-		var drawPoints = [];
+		var drawPoints = []; // The extreme points from which a line is drawn between
 		for (var sign=-1; sign<=1; sign+=2) {
 			var P = [sign * axisLength, sign * axisLength, sign * axisLength];
 			var lambda = ( graph.dot(this.dirV, graph.subtract(P,this.posV)) ) / ( graph.dot(this.dirV, this.dirV) );
@@ -41,7 +41,8 @@ class Line {
 		const lineMaterial = new THREE.LineBasicMaterial( {color: Math.random() * 0xffffff} );
 		this.shapeObj = new THREE.Line(new THREE.BufferGeometry().setFromPoints(drawPoints), lineMaterial);
 
-		return scene.add(this.shapeObj);
+		scene.add(this.shapeObj);
+		return this.shapeObj;
 	}
 
 	deleteShape() {
@@ -54,9 +55,19 @@ class Plane {
 	constructor(normal, constant, posV=null) {
 		this.normal = normal;
 		this.constant = constant;
-		this.posV = posV;
 
-		// this.drawShape(); Planes not currently working
+		if (this.posV != null) {
+			this.posV = posV;
+		} else {
+			var lambda = this.constant / graph.dot(this.normal,this.normal);
+			this.posV = [
+				lambda * this.normal[0],
+				lambda * this.normal[1],
+				lambda * this.normal[2]
+			];
+		}
+
+		this.drawShape();
 	}
 
 	resetValues() {
@@ -74,24 +85,16 @@ class Plane {
 		this.shapeObj = new THREE.Mesh( planeGeometry, planeMaterial );
 
 		// Position
-		if (this.posV != null) {
-			this.shapeObj.position.x = this.posV[0];
-			this.shapeObj.position.y = this.posV[1];
-			this.shapeObj.position.z = this.posV[2];
-		} else {
-			var lambda = this.constant / graph.dot(this.normal,this.normal);
-			this.shapeObj.position.x = lambda * this.normal[0];
-			this.shapeObj.position.y = lambda * this.normal[1];
-			this.shapeObj.position.z = lambda * this.normal[2];
-		}
+		this.shapeObj.position.x = this.posV[0];
+		this.shapeObj.position.y = this.posV[1];
+		this.shapeObj.position.z = this.posV[2];
 
-		// Angle
-		var unitNormal = graph.unitV(this.normal);
-		this.shapeObj.rotateX(Math.acos(unitNormal[0]));
-		this.shapeObj.rotateY(Math.acos(unitNormal[1]));
-		this.shapeObj.rotateZ(Math.acos(unitNormal[2])); // Fix this
+		// Rotation
+		this.shapeObj.lookAt(this.normal[0], this.normal[1], this.normal[2]);
 
-		return scene.add(this.shapeObj);
+
+		scene.add(this.shapeObj);
+		return this.shapeObj;
 	}
 
 	deleteShape() {
@@ -109,6 +112,7 @@ class Point {
 
 	resetValues() {
 		this.vals = null;
+		this.deleteShape();
 	}
 
     drawShape() {
@@ -120,8 +124,13 @@ class Point {
 		this.shapeObj.position.y = this.vals[1];
 		this.shapeObj.position.z = this.vals[2];
 
-		return scene.add(this.shapeObj);
+		scene.add(this.shapeObj);
+		return this.shapeObj;
     }
+	
+	deleteShape() {
+		scene.remove(this.shapeObj);
+	}
 }
 
 // Whole Graph
