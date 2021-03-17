@@ -94,17 +94,6 @@ class Sidebar {
 
 	countLinesPlanesPoints() {
 		return this.getValidModuleIds().map(x => x.length);
-
-		/* Saving time by using higher-order function
-		
-		var validIds = this.getValidModuleIds();
-		var counts = [];
-		counts.push(validIds[0].length);
-		counts.push(validIds[1].length);
-		counts.push(validIds[2].length);
-
-		return counts;
-		*/
 	}
 
 	// Returns an array of possible functions that can be executed given the number of lines, planes and points there are 
@@ -126,10 +115,8 @@ class Sidebar {
 
     showPossibleFunctions() {
 		var funcs = this.possibleFunctions();
-		// var cont = document.createElement("div");
 		var cont = document.getElementById("calc-btns-cont");
 		cont.innerHTML = "";
-		// cont.classList.add("calculation-buttons");
 
         for (var i=0; i<funcs.length;i++) {
 			var btn = mp.createButton(funcs[i],"createNewModule('calc','" + funcs[i] + "')","");

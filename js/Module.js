@@ -358,6 +358,7 @@ class CalcModule extends Module {
 			graph.content[this.operandModules[1]]
 		);
 
+
 		this.module.innerHTML = "";
 		this.state = "displayResult";
 		
