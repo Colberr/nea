@@ -336,7 +336,7 @@ class CalcModule extends Module {
 
 	iterateFormatSelection() {
 		this.formatOptions = this.formatFormatOptions(this.allOptions[this.selectionIndex]);
-		this.showFormatSelector("fix this title");
+		this.showFormatSelector("Select Shape " + (this.selectionIndex+1).toString());
 	}
 
 	// Using polymorphism to edit parent object function definition (which is called by a button)
