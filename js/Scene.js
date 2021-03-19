@@ -9,6 +9,8 @@ renderer.setSize(cont.offsetWidth, cont.offsetHeight);
 cont.appendChild(renderer.domElement);
 
 
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
 // Creating axes
 const axisLength = 80;
 
@@ -40,15 +42,16 @@ scene.add(basePlane);
 
 
 // Updates graphics
-var dx = dy = dz = 0;				// Position
-var dalpha = dbeta = dgamma = 0;	// Rotation
+// var dx = dy = dz = 0;				// Position
+// var dalpha = dbeta = dgamma = 0;	// Rotation
 function update() {
-	camera.position.x += dx;
-	camera.position.y += dy;
-	camera.position.z += dz;
-	camera.rotation.x += dalpha;
-	camera.rotation.y += dbeta;
-	camera.rotation.z += dgamma;
+	// camera.position.x += dx;
+	// camera.position.y += dy;
+	// camera.position.z += dz;
+	// camera.rotation.x += dalpha;
+	// camera.rotation.y += dbeta;
+	// camera.rotation.z += dgamma;
+	// controls.update();
 }
 
 // Draws graphics
@@ -66,99 +69,96 @@ function drawLoop() {
 drawLoop();
 
 
-// ------------------------------------------------------------------
-// Camera movement
-const movementSpeed = 0.01;
-const rotationSpeed = 0.01;
+// // ------------------------------------------------------------------
+// // Camera movement
+// const movementSpeed = 0.01;
+// const rotationSpeed = 0.01;
 
-document.addEventListener('keydown', function(event) {
-	switch (event.key) {
-		case "a":
-			dx = -movementSpeed;
-			return dx;
-		case "d":
-			dx = movementSpeed;
-			return dx;
-		case "r":
-			dy = movementSpeed;
-			return dy;
-		case "f":
-			dy = -movementSpeed;
-			return dy;
-		case "w":
-			dz = -movementSpeed;
-			return dz;
-		case "s":
-			dz = movementSpeed;
-			return dz;
-		case "ArrowUp":
-			dalpha = rotationSpeed;
-			return dalpha;
-		case "ArrowDown":
-			dalpha = -rotationSpeed;
-			return dalpha;
-		case "ArrowLeft":
-			dbeta = rotationSpeed;
-			return dbeta;
-		case "ArrowRight":
-			dbeta = -rotationSpeed;
-			return dbeta;
-		case "q":
-			dgamma = rotationSpeed;
-			return dgamma;
-		case "e":
-			dgamma = -rotationSpeed;
-			return dgamma;
-	}
-});
+// document.addEventListener('keydown', function(event) {
+// 	switch (event.key) {
+// 		case "a":
+// 			dx = -movementSpeed;
+// 			return dx;
+// 		case "d":
+// 			dx = movementSpeed;
+// 			return dx;
+// 		case "r":
+// 			dy = movementSpeed;
+// 			return dy;
+// 		case "f":
+// 			dy = -movementSpeed;
+// 			return dy;
+// 		case "w":
+// 			dz = -movementSpeed;
+// 			return dz;
+// 		case "s":
+// 			dz = movementSpeed;
+// 			return dz;
+// 		case "ArrowUp":
+// 			dalpha = rotationSpeed;
+// 			return dalpha;
+// 		case "ArrowDown":
+// 			dalpha = -rotationSpeed;
+// 			return dalpha;
+// 		case "ArrowLeft":
+// 			dbeta = rotationSpeed;
+// 			return dbeta;
+// 		case "ArrowRight":
+// 			dbeta = -rotationSpeed;
+// 			return dbeta;
+// 		case "q":
+// 			dgamma = rotationSpeed;
+// 			return dgamma;
+// 		case "e":
+// 			dgamma = -rotationSpeed;
+// 			return dgamma;
+// 	}
+// });
 
-document.addEventListener('keyup', function(event) {
-	switch (event.key) {
-		case "a":
-			dx = 0;
-			return dx;
-		case "d":
-			dx = 0;
-			return dx;
-		case "r":
-			dy = 0;
-			return dy;
-		case "f":
-			dy = 0;
-			return dy;
-		case "w":
-			dz = 0;
-			return dz;
-		case "s":
-			dz = 0;
-			return dz;
-		case "ArrowUp":
-			dalpha = 0;
-			return dalpha;
-		case "ArrowDown":
-			dalpha = 0;
-			return dalpha;
-		case "ArrowLeft":
-			dbeta = 0;
-			return dbeta;
-		case "ArrowRight":
-			dbeta = 0;
-			return dbeta;
-		case "q":
-			dgamma = 0;
-			return dgamma;
-		case "e":
-			dgamma = 0;
-			return dgamma;
-	}
-});
+// document.addEventListener('keyup', function(event) {
+// 	switch (event.key) {
+// 		case "a":
+// 			dx = 0;
+// 			return dx;
+// 		case "d":
+// 			dx = 0;
+// 			return dx;
+// 		case "r":
+// 			dy = 0;
+// 			return dy;
+// 		case "f":
+// 			dy = 0;
+// 			return dy;
+// 		case "w":
+// 			dz = 0;
+// 			return dz;
+// 		case "s":
+// 			dz = 0;
+// 			return dz;
+// 		case "ArrowUp":
+// 			dalpha = 0;
+// 			return dalpha;
+// 		case "ArrowDown":
+// 			dalpha = 0;
+// 			return dalpha;
+// 		case "ArrowLeft":
+// 			dbeta = 0;
+// 			return dbeta;
+// 		case "ArrowRight":
+// 			dbeta = 0;
+// 			return dbeta;
+// 		case "q":
+// 			dgamma = 0;
+// 			return dgamma;
+// 		case "e":
+// 			dgamma = 0;
+// 			return dgamma;
+// 	}
+// });
 
 
 // Initial camera position
-camera.position.x = 3;
-camera.position.y = 3;
-camera.position.z = 5;
-
-
-// ------------------------------------------------------------------
-
+camera.position.x = 4;
+camera.position.y = 4;
+camera.position.z = 4;
+camera.lookAt( 0,0,0 );
