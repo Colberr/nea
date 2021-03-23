@@ -66,6 +66,7 @@ function setCameraPosition(x,y,z,origin) {
 	camera.position.x = x;
 	camera.position.y = y;
 	camera.position.z = z;
+	controls.target.set( 0,0,0 ); // Centre of rotation
 	if (origin) { camera.lookAt( 0,0,0 ) };
 	
 	return [x,y,z];
