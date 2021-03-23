@@ -62,7 +62,12 @@ function drawLoop() {
 drawLoop();
 
 // Initial camera position
-camera.position.x = 4;
-camera.position.y = 4;
-camera.position.z = 4;
-camera.lookAt( 0,0,0 );
+function setCameraPosition(x,y,z,origin) {
+	camera.position.x = x;
+	camera.position.y = y;
+	camera.position.z = z;
+	if (origin) { camera.lookAt( 0,0,0 ) };
+	
+	return [x,y,z];
+}
+recentreCamera(); // Initial camera position
