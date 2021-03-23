@@ -78,7 +78,7 @@ class Plane {
 	}
 	
 	drawShape() {
-		var planeGeometry = new THREE.PlaneGeometry( axisLength / 4, axisLength / 4 );
+		var planeGeometry = new THREE.PlaneGeometry(axisLength * 1.25, axisLength * 1.25);
 		var planeMaterial = new THREE.MeshBasicMaterial( {color: Math.random() * 0xffffff, side: THREE.DoubleSide} );
 		planeMaterial.transparent = true;
 		planeMaterial.opacity = 0.8;
