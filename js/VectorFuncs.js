@@ -29,9 +29,8 @@ class Line {
 	drawShape() {
 		var drawPoints = []; // The extreme points from which a line is drawn between
 		for (var sign=-1; sign<=1; sign+=2) {
-			var P = [sign * axisLength, sign * axisLength, sign * axisLength];
-			var lambda = ( graph.dot(this.dirV, graph.subtract(P,this.posV)) ) / ( graph.dot(this.dirV, this.dirV) );
-			var Q = graph.add(this.posV, graph.scale(lambda,this.dirV));
+			var lambda = - (graph.dot(this.posV,this.dirV) / graph.dot(this.dirV,this.dirV));
+			var Q = graph.add(this.posV, graph.scale(lambda + sign * axisLength * Math.sqrt(3) * 0.6,graph.unitV(this.dirV)));
 
 			drawPoints.push(
 				new THREE.Vector3(Q[0], Q[1], Q[2])
@@ -78,7 +77,7 @@ class Plane {
 	}
 	
 	drawShape() {
-		var planeGeometry = new THREE.PlaneGeometry( axisLength / 4, axisLength / 4 );
+		var planeGeometry = new THREE.PlaneGeometry(axisLength * 1.4, axisLength * 1.4);
 		var planeMaterial = new THREE.MeshBasicMaterial( {color: Math.random() * 0xffffff, side: THREE.DoubleSide} );
 		planeMaterial.transparent = true;
 		planeMaterial.opacity = 0.8;

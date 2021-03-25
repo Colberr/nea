@@ -153,3 +153,13 @@ function closeImportExport() {
 	document.getElementById("importCont").style.display = "none";
 	document.getElementById("exportText").value = sidebar.createExportJSON();
 }
+
+function recentreCamera() {
+	const startPos = [1,1,3];
+	return setCameraPosition(
+		startPos[0],
+		startPos[1],
+		startPos[2],
+		true
+	);
+}

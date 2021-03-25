@@ -117,9 +117,11 @@ class Sidebar {
 		var funcs = this.possibleFunctions();
 		var cont = document.getElementById("calc-btns-cont");
 		cont.innerHTML = "";
+		var down = (document.getElementById("side-bottom").offsetHeight < 60) // Whether the bottom-right buttons are up or down
 
         for (var i=0; i<funcs.length;i++) {
 			var btn = mp.createButton(funcs[i],"createNewModule('calc','" + funcs[i] + "')","");
+			btn.disabled = down;
 			cont.appendChild(btn);	
 		}
 		

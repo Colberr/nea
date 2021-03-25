@@ -108,7 +108,7 @@ table tr td.byCol {
 	width: 100%;
 }
 #importWindow {
-	height: 40%;
+	max-height: 90%;
 	width: 40%;
 
 	left: 50%;
